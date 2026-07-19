@@ -1,0 +1,11 @@
+*
+
+!/.github/
+!/.github/**
+
+!/AGENTS.md
+
+!/docs/
+!/docs/**
+
+!/.gitignore
