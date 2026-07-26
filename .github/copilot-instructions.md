@@ -28,50 +28,8 @@ BFF API docs: `searchBrowseBff/doc/search/`, `holidays-checkoutPay-service/doc/`
 
 The shell (`holidays-searchBrowse-presentation`) both **consumes** remotes and **exposes** its own components (`FlightDetails`, `AccommodationDetailsCardContainer`, `AmendmentCancellationAccordion`). The S&S provider must be running alongside the shell for the full booking flow.
 
----
-
-## TDD Protocol (all projects — non-negotiable)
-
-The full protocol lives in `AGENTS.md` at the repo root. The short version:
-
-1. **RED** — write one failing test, stop, show output, ask for feedback before writing code.
-2. **GREEN** — write minimum code to pass, stop, show output, ask for feedback before refactoring.
-3. **REFACTOR** — one refactor, confirm green, ask for feedback before committing.
-4. **COMMIT** — commit, ask before moving to the next test.
-
-Violations: combining steps, writing production code without a failing test, writing more than one test at a time.
-
----
-
-## Commits
-
-Conventional commits are mandatory. Ticket number is **required** as the scope:
-
-```
-feat(DWNFLB-123): short description
-```
-
-- Format code before committing (see per-project instructions for the tool).
-- Infrastructure files (`build.gradle.kts`, `next.config.ts`, `.gitignore`, etc.) must be committed separately from feature/refactor commits.
-- **Git workflow**: trunk-based. Commit to local `main`, then run `./pr` to create a branch, move commits, push, and open a PR.
-
----
 
 ## Backend Services (Kotlin / Spring Boot)
-
-All Kotlin services (`searchBrowseBff`, `holidays-checkoutPay-service`, `holidays-manageTrip-service`, `flight-bff` ) share these patterns:
-
-**Architecture** — Onion/Hexagonal, enforced by ArchUnit:
-```
-adapter.input.rest   →  usecase  →  domain
-adapter.output.*     ←  domain ports
-```
-- `domain` has zero Spring/JPA/generated-client imports.
-- Port names are implementation-agnostic (`CartRepository`); adapter names reveal the implementation (`TravelBoxCartRepository`).
-- Request DTOs have `toDomain()`; response DTOs have `fromDomain(...)`.
-- Use cases expose one primary action: `execute`.
-- Avoid anemic use cases: if a use case would only proxy a repository call, call the repository directly from the controller instead.
-
 **Common commands** (run from each sub-project root):
 ```bash
 ./gradlew check          # lint + tests + coverage
@@ -154,21 +112,6 @@ npm run lint             # ESLint
 npm run type-check       # TypeScript
 ```
 
-**Testing conventions**:
-- Never use `data-testid`. Query by role, text, or ARIA label.
-- Mock only what crosses the layer boundary (API hooks at page level, child components at component level, HTTP via MSW at hook level — never mock `fetch`/`axios` directly).
-- Test fixtures use `A_` prefix for arbitrary/irrelevant values.
-- In `presentationprovider`, tests use `jest-fixed-jsdom` with `shadow-dom-testing-library` (BAgel renders in Shadow DOM). Test files mirror `src/` under `__tests__/`.
-
-**Feature flags**: DevCycle.
-- In `presentationprovider`: use `useFlagValue` from `src/featureToggles/value.tsx`.
-- In `manageTrip-presentation`: use `useDevCycleClient()` wrapped in hooks under `src/flags/`.
-- In `presentation-shell`: use `src/shared/toggles/devcycle.ts` via `FeatureToggleProvider`.
-
-**Environment config**: Never use `process.env` inside components in the S&S provider — read from `useEnvironmentContext()`. Register required startup vars in `validate-env.ts`. In the shell, `NEXT_PUBLIC_*` vars must be explicitly forwarded via `next.config.ts` `env:` block.
-
-**`reactStrictMode: false`** in the presentation shell — intentional, do not enable. Some TBX endpoints are non-idempotent.
-
 **Auth**: `@auth0/nextjs-auth0` v4 in the presentation shell — configured in `src/lib/`, handled by `src/middleware.ts`.
 
 **Contract testing** (presentation shell): lives in `/contract-testing-library/` with its own `package.json`, pre-built during `npm install`. If contract tests fail after dependency updates, sync `react`/`react-dom` versions between root and `contract-testing-library/package.json`.
@@ -196,7 +139,6 @@ make ENV=dev test-unit   # LocalStack (requires Docker)
 ---
 
 ## Cross-Cutting Rules
-
 - **No `data-testid`** in frontend tests.
 - **No hardcoded secrets** anywhere — `.env.example` only, never `.env`.
 - **Gitleaks** runs on pre-commit in all projects.
