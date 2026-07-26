@@ -1,1 +1,0 @@
-../../../docs/tdd/test-quality.md

@@ -1,1 +1,0 @@
-../../../docs/tdd/outside-in.md

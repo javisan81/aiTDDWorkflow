@@ -2,7 +2,9 @@
 
 This is a monorepo for the **Darwin** platform at British Airways Holidays. It contains backend services (Kotlin/Spring Boot), frontend micro-frontends (Next.js 15 + Module Federation), infrastructure (Terraform), and more.
 
-Each sub-project has its own `AGENTS.md` or `.github/copilot-instructions.md` with detailed, project-specific guidance. **Always read the sub-project instructions before working in a sub-directory.**
+**Mandatory Rule:** Read and adhere strictly to `AGENTS.md` for all workflows, TDD cycles, and skill references in this repository.
+
+Each sub-project has its own `AGENTS.md` or `.github/copilot-instructions.md` with detailed, project-specific guidance. **Always read the sub-project instructions before working in a sub-directory, use those instructions in conjuction with the root AGENTS.md, if they are opposite, always the root AGENTS.md wins.**
 
 ---
 
@@ -15,10 +17,11 @@ Each sub-project has its own `AGENTS.md` or `.github/copilot-instructions.md` wi
 | Search & Browse | `searchBrowseBff/` | Kotlin/Spring Boot BFF — hotel & bundle search | — |
 | Search & Browse | `holidays-searchBrowse-presentation/` | Next.js shell (MF host) — S&B booking journey | 8090 |
 | Search & Browse | `holidays-searchBrowse-presentationprovider/` | Next.js MFE remote (`search-select-provider`) | 8091 |
-| Checkout & Pay | `holidays-checkoutPay-service/` | Kotlin/Spring Boot — checkout & payment | — |
 | Manage Trip | `holidays-manageTrip-service/` | Kotlin/Spring Boot — manage booking BFF | — |
 | Manage Trip | `holidays-manageTrip-presentation/` | Next.js MFE remote (`manage-trip-provider`) | — |
 | Platform | `holidays-platform-infra/` | Terraform — shared AWS infrastructure | — |
+| flight-bff | `holidays-searchBrowse-flight-bff/` | bff (backend for frontend) of flights sos team | — |
+
 
 Architecture diagrams (Mermaid C4): `darwinC4Diagrams/`  
 BFF API docs: `searchBrowseBff/doc/search/`, `holidays-checkoutPay-service/doc/`
@@ -56,7 +59,7 @@ feat(DWNFLB-123): short description
 
 ## Backend Services (Kotlin / Spring Boot)
 
-All Kotlin services (`searchBrowseBff`, `holidays-checkoutPay-service`, `holidays-manageTrip-service`) share these patterns:
+All Kotlin services (`searchBrowseBff`, `holidays-checkoutPay-service`, `holidays-manageTrip-service`, `flight-bff` ) share these patterns:
 
 **Architecture** — Onion/Hexagonal, enforced by ArchUnit:
 ```

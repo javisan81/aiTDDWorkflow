@@ -23,8 +23,13 @@ Write **just one test** — never more.
 
 Use the `/tdd-outside-in` skill for layer progression, TPP, and test explosion detection.
 
+### Step 0 — PLAN (Once per task, and updated each cycle)
+1. Run `/behavior-planning` skill to create the initial Test List.
+2. **STOP. Ask for approval on the list before starting RED.**
+3. Re-run `/behavior-planning` at the start of each RED phase to adapt the list.
+
 ### Step 1 — RED
-1. Ask the user what the next behaviour to test is (if not already specified)
+1. Run `/behavior-planning` to pick the next target behavior from the Test List.
 2. Ask the user about expected test quality (if not already established for this session)
 3. Write **one** failing test. Run it. Confirm it fails.
 4. Run `/yagni` checklist on the test before showing it to the user.
@@ -103,5 +108,7 @@ do not delegate — just do the task directly and show the work as you go.
 | YAGNI check on test (RED) or production code (GREEN) | `/yagni` |
 | Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
+| Plan next tests to implement | `/behavior-plannings` |
+
 
 Full content lives in `docs/tdd/`.
