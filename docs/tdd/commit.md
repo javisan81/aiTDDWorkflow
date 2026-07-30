@@ -26,6 +26,7 @@ type(TICKET-123): short description
 - `type`: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
 - **Ticket number is mandatory as the scope.** Ask the user before committing if unknown.
 - The message explains the **intention** (why), not the changes (what).
+- Commit with a message that explains the **intention**, not the changes.
 
 ## Pre-commit checklist
 
@@ -34,7 +35,7 @@ type(TICKET-123): short description
    - Frontend: `npm run lint`
 2. **Run all tests** — confirm everything is green
    - Backend: `./gradlew test`
-   - Frontend: `TZ=UTC npm test`
+   - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`
 3. **Verify the application boots** — the Spring context must load without errors.
    If context fails to start, fix it before committing. No exceptions.
 
