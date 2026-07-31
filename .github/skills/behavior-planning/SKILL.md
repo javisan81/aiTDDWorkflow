@@ -1,1 +1,1 @@
-../../../docs/tdd/behavior-planning.md
+../../../docs/skills/behavior-planning.md

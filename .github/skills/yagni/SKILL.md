@@ -1,1 +1,1 @@
-../../../docs/tdd/yagni.md
+../../../docs/skills/yagni.md

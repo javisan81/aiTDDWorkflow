@@ -1,1 +1,1 @@
-../../../docs/tdd/hexagonal-arch.md
+../../../docs/skills/hexagonal-arch.md

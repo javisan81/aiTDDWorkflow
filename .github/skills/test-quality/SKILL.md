@@ -1,1 +1,1 @@
-../../../docs/tdd/test-quality.md
+../../../docs/skills/test-quality.md

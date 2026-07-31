@@ -1,1 +1,1 @@
-../../../docs/tdd/outside-in.md
+../../../docs/skills/tdd-outside-in.md

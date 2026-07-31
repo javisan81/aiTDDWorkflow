@@ -1,1 +1,1 @@
-../../../docs/tdd/backend-tests.md
+../../../docs/skills/backend-tests.md

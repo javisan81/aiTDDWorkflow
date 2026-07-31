@@ -1,1 +1,1 @@
-../../../docs/tdd/test-doubles.md
+../../../docs/skills/test-doubles.md
