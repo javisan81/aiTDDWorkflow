@@ -1,0 +1,1 @@
+../../../docs/skills/migrate-controller-stack.md
