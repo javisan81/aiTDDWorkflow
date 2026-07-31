@@ -57,3 +57,6 @@ We will execute this in two distinct phases:
 ## Execution Instructions
 - Execute all file creations, refactors, dead code removal, and multi-layer test migrations in a single step—no red-green-refactor cycles required.
 - Trace and list all layers, classes, and test files associated with `$CONTROLLER_NAME` across the entire stack, then execute the full migration and cleanup directly into `$DEST_SERVICE`.
+
+### Example of Usage
+Apply skill migrate-controller-stack with SOURCE_SERVICE=searchbrowse-bff DEST_SERVICE=flight-bff CONTROLLER_NAME=CabinUpgradesController

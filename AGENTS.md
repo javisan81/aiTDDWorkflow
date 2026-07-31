@@ -21,7 +21,7 @@ Each sub-project may have its own `AGENTS.md` with project-specific guidance (te
 Each step below ends your response. Do not combine steps. Do not anticipate the next step.
 Write **just one test** — never more.
 
-Use the `/tdd-outside-in` skill for layer progression, TPP, and test explosion detection.
+Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-in` for layer progression, TPP, and test explosion detection.
 
 ### Step 0 — PLAN (Once per task, and updated each cycle)
 1. Run `/behavior-planning` skill to create the initial Test List.
@@ -109,6 +109,7 @@ do not delegate — just do the task directly and show the work as you go.
 | Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
 | Plan next tests to implement | `/behavior-plannings` |
+| Migrage controllers from one bff to another, this is allowed to not do tdd | `/migrate-controller-stack ` |
 
 
-Full content lives in `docs/tdd/`.
+Full content lives in `docs/skills/`.
