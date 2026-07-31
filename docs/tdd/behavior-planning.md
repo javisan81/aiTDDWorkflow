@@ -1,3 +1,8 @@
+---
+name: behavior-planning
+description: Plan behaviors and manage the test list at the start of tasks and RED phases.
+---
+
 # /behavior-planning Skill
 
 Use this skill at the start of a new feature or task, and at the beginning of each RED phase to manage the Test List.

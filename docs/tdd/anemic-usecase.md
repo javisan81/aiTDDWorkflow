@@ -1,3 +1,8 @@
+---
+name: anemic-use-case-check
+description: Checklist to identify and refactor anemic use cases in the architecture.
+---
+
 # Anemic Use Case Check
 
 Run this checklist in the **REFACTOR phase** on every use case you write or touch.
