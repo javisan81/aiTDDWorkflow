@@ -33,6 +33,61 @@ Explore the `/docs` folder (if available) or the base scripts to adapt the workf
 3. **Environment Setup:**
 If you use automated scripts from this repository, make sure to install the necessary dependencies and initialize your environment variables (e.g., `.env` with your API keys).
 
+## 🔍 Optional: Semantic Code Search (qdrant-rag)
+
+This workspace supports **semantic code search** via a local Qdrant vector database, integrated with GitHub Copilot CLI through the `qdrant-rag` MCP server. This is **entirely optional** but significantly improves code navigation in large codebases.
+
+### Stack
+
+| Component | Purpose |
+|---|---|
+| [Docker](https://www.docker.com/) | Runs the Qdrant container |
+| [Qdrant](https://qdrant.tech/) | Local vector database that stores code embeddings |
+| [qdrant-rag MCP server](https://github.com/feuerdev/qdrant-rag-mcp) | MCP server that indexes code and exposes semantic search to Copilot |
+
+### Installation
+
+**1. Start Qdrant locally with Docker:**
+```bash
+docker run -d --name qdrant \
+  -p 6333:6333 -p 6334:6334 \
+  -v $(pwd)/qdrant_storage:/qdrant/storage \
+  qdrant/qdrant
+```
+
+**2. Install the qdrant-rag MCP server:**
+```bash
+npm install -g qdrant-rag-mcp
+```
+
+**3. Register it in your Copilot CLI MCP config** (`~/.copilot/mcp.json` or equivalent):
+```json
+{
+  "mcpServers": {
+    "qdrant-rag": {
+      "command": "npx",
+      "args": ["qdrant-rag-mcp"],
+      "env": {
+        "QDRANT_URL": "http://localhost:6333"
+      }
+    }
+  }
+}
+```
+
+**4. Index the sub-projects** (first time only — see `AGENTS.md` for the full collection map):
+```bash
+# Example for one sub-project:
+# Use the qdrant-rag index_codebase tool via Copilot CLI, pointing at the sub-project path.
+# Never index from the repo root — the root .gitignore blocks everything.
+```
+
+### Usage
+
+Once installed, Copilot agents will automatically use `reindex_changes` at the start of each session (as instructed in `AGENTS.md`) and will prefer semantic search over `grep` for conceptual queries.
+
+---
+
 ## 💻 Basic Usage
 
 The core of `aiTDDWorkflow` relies on discipline. When facing a new requirement:

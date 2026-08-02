@@ -113,3 +113,35 @@ do not delegate — just do the task directly and show the work as you go.
 
 
 Full content lives in `docs/skills/`.
+
+---
+
+## Semantic Code Search (qdrant-rag), just in case qdrant-rag is configured as a mcp
+
+The workspace is indexed in Qdrant for semantic search. Each sub-project has its own collection (the tool auto-generates collection names from path hashes).
+
+**Rules:**
+- Always use the `qdrant-rag` MCP tool for code search when available — prefer it over `grep` for conceptual/semantic queries.
+- **At the start of every working session**, run `reindex_changes` on the collection(s) for the sub-project(s) you are about to work on. This is fast and ensures the index reflects the latest code.
+- **Never** index from the repo root (`/Users/javierlopezfernandez/IdeaProjects/bah`) — the root `.gitignore` uses `*` and blocks everything. Always index sub-projects individually.
+- Only run a full `index_codebase` (with `forceReindex: true`) when a sub-project has never been indexed or its collection has been deleted. For all other cases, use `reindex_changes`.
+- Ignore patterns must match `.ragignore` (see root `.ragignore`). Pass them via `ignorePatterns` on every `index_codebase` call.
+
+**Active collections (as of last reindex):**
+
+| Sub-project | Collection |
+|---|---|
+| `searchBrowseBff` | `code_2890ade2` |
+| `holidays-manageTrip-service` | `code_c1ed0005` |
+| `holidays-manageTrip-presentation` | `code_8cf8edf0` |
+| `holidays-searchBrowse-presentation` | `code_b7836da0` |
+| `holidays-searchBrowse-presentationprovider` | `code_2995f24f` |
+| `holidays-searchBrowse-flight-bff` | `code_0564df04` |
+| `holidays-platform-infra` | `code_37d18fe6` |
+| `flight-orders-adapter-service` | `code_b3164bd8` |
+| `payments-payments-orchestrator` | `code_bedc9270` |
+| `holidays-designSystems-componentlibrary` | `code_3c091510` |
+| `monitoring-datadog-ba-holidays` | `code_cbe3c1ab` |
+| `mars-rover` | `code_a8cafd45` |
+
+> **Note:** The `qdrant-rag` tool does not support custom collection names — names are derived from path hashes and cannot be changed. When searching, target the collection for the relevant sub-project. When in doubt, search across all active collections listed above.
