@@ -17,7 +17,8 @@ Use this skill at the start of a new feature or task, and at the beginning of ea
 ## 1. Initial Plan (Task Start)
 
 When starting a task:
-1. **Analyze Requirements:** Identify the boundaries, happy path, edge cases, and error conditions.
+1. **Analyze Requirements:** Identify the boundaries, happy path, edge cases, and error conditions. 
+   Identify the files to minimize the context size using a local rag if configured as mcp or you have access to it. 
 2. **Draft Test List:** Write a bulleted list of high-level behaviors ordered by complexity (simplest first).
 3. **Format:** Use descriptive, domain-focused titles (e.g., `* Should reject order when inventory is zero`).
 4. **Validation:** Present the list to the user and wait for explicit approval before moving to Step 1 (RED).
