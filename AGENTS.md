@@ -57,7 +57,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 4 — COMMIT
 1. Run `/commit` skill — follow every step in the pre-commit checklist.
 2. Commit with a message that explains the **intention**, not the changes.
-3. Compact context use /compact in github copilot or the equivalent in the current agentic tool 
+3. Compact context run `/compact` in github copilot or the equivalent skill, if you cannot execute it ask me to do it.
 5. **STOP. Ask: "Shall we move to the next test?"**
 6. Do not write the next test until the user explicitly approves.
 
