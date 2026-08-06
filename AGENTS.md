@@ -16,10 +16,12 @@ Each sub-project may have its own `AGENTS.md` with project-specific guidance (te
 
 ---
 
-## TDD Protocol — Follow this mechanically, no exceptions
+## TDD Protocol — Follow this mechanically, no exceptions for new features
 
 Each step below ends your response. Do not combine steps. Do not anticipate the next step.
 Write **just one test** — never more.
+
+If the user talks about doing a refactor and we are green (all tests passes) we can go to refactor stage directly and continue the cycle in that step.
 
 Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-in` for layer progression, TPP, and test explosion detection.
 
@@ -55,8 +57,11 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 4 — COMMIT
 1. Run `/commit` skill — follow every step in the pre-commit checklist.
 2. Commit with a message that explains the **intention**, not the changes.
-3. **STOP. Ask: "Shall we move to the next test?"**
-4. Do not write the next test until the user explicitly approves.
+3. Compact context use /compact in github copilot or the equivalent in the current agentic tool 
+5. **STOP. Ask: "Shall we move to the next test?"**
+6. Do not write the next test until the user explicitly approves.
+
+
 
 ### Violations — stop and flag immediately
 - Writing production code without a failing test → YAGNI violation
