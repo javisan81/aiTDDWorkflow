@@ -71,6 +71,38 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 - Combining GREEN+REFACTOR in one response → forbidden
 - Writing more than one test → forbidden
 
+
+### Mandatory TDD Phase State
+
+At all times, maintain and state these three values internally:
+
+- `PHASE`: PLAN | RED | GREEN | REFACTOR | COMMIT
+- `CURRENT_BEHAVIOR`: exactly one behavior from the Test List
+- `NEXT_ALLOWED_ACTION`: the only action permitted by the current phase
+
+Every response involving code work must begin its tool-use reasoning by checking:
+1. Current phase
+2. Current behavior
+3. Required approval or transition
+
+Allowed transitions:
+
+PLAN -> RED: user approves the Test List
+RED -> GREEN: user approves the failing test
+GREEN -> REFACTOR: user approves the passing implementation
+REFACTOR -> COMMIT: user approves the refactor
+COMMIT -> RED: user approves moving to the next behavior
+
+Never skip a transition, combine phases, or start another test before COMMIT.
+After each phase, stop and request the required approval.
+
+Also add a persistent checklist requirement:
+
+Before every response, update:
+- Phase
+- Current behavior
+- Test List status
+- User approval status
 ---
 
 ## Core mocking rule
