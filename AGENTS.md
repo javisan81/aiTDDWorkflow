@@ -35,8 +35,9 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 2. Ask the user about expected test quality (if not already established for this session)
 3. Write **one** failing test. Run it. Confirm it fails.
 4. Run `/yagni` checklist on the test before showing it to the user.
-5. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
-6. Do not write any production code until the user explicitly approves.
+5. run `/test-quality` to understand if the test is good enough.
+6. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
+7. Do not write any production code until the user explicitly approves.
 
 ### Step 2 — GREEN
 1. Write the **minimum** code to make the test pass. Run all tests. Confirm green.

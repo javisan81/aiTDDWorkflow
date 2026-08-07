@@ -38,11 +38,3 @@ type(TICKET-123): short description
    - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`
 3. **Verify the application boots** — the Spring context must load without errors.
    If context fails to start, fix it before committing. No exceptions.
-
-## Co-author trailer
-
-Always append this trailer at the end of the commit message:
-
-```
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
-```

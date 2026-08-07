@@ -162,3 +162,15 @@ Prefer composing the expected literal in the test from the fixture's raw field(s
 (a) calling the production formatter, or (b) hiding a pre-formatted string behind an opaque
 fixture constant — the reader should be able to see which segment value produced which text.
 
+In a test dont create json with mappers, use the string as json string.
+So this is an example of something wrong:
+```kotlin
+  val expected =
+            jacksonObjectMapper().writeValueAsString(
+                AlternativeFlightsResponse.fromDomain(
+                    domain,
+                    AlternativeFlightFilters(emptyList(), emptyList(), Stops.ANY_NUMBER_OF_STOPS),
+                ),
+            )
+```
+The above example should be the string representing the thing.
