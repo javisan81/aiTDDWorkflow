@@ -41,7 +41,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 
 ### Step 2 — GREEN
 1. Write the **minimum** code to make the test pass. Run all tests. Confirm green.
-2. Run `/yagni` checklist on the production code just written before showing it to the user.
+2. Run `/yagni` checklist on the production code just written before showing it to the user, to be sure your code is the minimum one to make the test to pass.
 3. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
 4. Do not refactor until the user explicitly approves.
 5. Mock if required using the /test-doubles skill
