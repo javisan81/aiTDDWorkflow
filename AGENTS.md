@@ -126,19 +126,12 @@ The short version: one commit per GREEN, ticket number mandatory, intention-base
 
 ---
 
-## Sub-agents / background tasks
+## Sub-agents & Phase Isolation
 
-Do the work yourself in the main agent, in the foreground, by default.
+By default, execute single-step reasoning in the main agent context.
 
-Only delegate to a sub-agent (background or otherwise) when there is genuine
-parallel work: the main agent keeps doing something else itself while the
-sub-agent runs. If the main agent has nothing else to do in the meantime,
-do not delegate — just do the task directly and show the work as you go.
-
-Skills are subagent-compatible: when a skill's work is independent from the
-main task, run it in a dedicated subagent and return only its concise,
-actionable result. Any Gradle test execution performed by a skill or subagent
-must use `/gradle-tests`; do not invoke `./gradlew` directly.
+However, **you MUST delegate to a dedicated subagent** if you use a skill that says to be executed in a subagent or if there is an explicit rule to do it.
+Subagents must operate with clean, minimal context and return only the required output or failure diagnostics to the main agent.
 
 ---
 
