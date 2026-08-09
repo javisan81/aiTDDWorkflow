@@ -128,3 +128,9 @@ fun `returns 404 when hotel is not found`() { ... }
 @Test
 fun `adds item to cart and returns updated total`() { ... }
 ```
+# Subagent execution
+
+Run this skill in a dedicated subagent. This is mandatory, including when the
+test work appears small or straightforward. Keep the response focused on the
+test outcome and relevant diagnostics. For Gradle test execution, always use
+`/gradle-tests`; do not print raw Gradle output unless explicitly requested.

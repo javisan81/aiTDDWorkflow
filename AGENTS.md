@@ -33,14 +33,14 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 1 — RED
 1. Run `/behavior-planning` to pick the next target behavior from the Test List.
 2. Ask the user about expected test quality (if not already established for this session)
-3. Write **one** failing test. Run it. Confirm it fails.
+3. Run `/red-phase` in a dedicated subagent to write **one** failing test, run it, and confirm it fails.
 4. Run `/yagni` checklist on the test before showing it to the user.
 5. run `/test-quality` to understand if the test is good enough.
 6. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
 7. Do not write any production code until the user explicitly approves.
 
 ### Step 2 — GREEN
-1. Write the **minimum** code to make the test pass. Run all tests. Confirm green.
+1. Run `/green-phase` in a dedicated subagent to write the **minimum** code to make the test pass, run all tests, and confirm green.
 2. Run `/yagni` checklist on the production code just written before showing it to the user, to be sure your code is the minimum one to make the test to pass.
 3. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
 4. Do not refactor until the user explicitly approves.
@@ -58,9 +58,12 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 4 — COMMIT
 1. Run `/commit` skill — follow every step in the pre-commit checklist.
 2. Commit with a message that explains the **intention**, not the changes.
-3. Compact context run `/compact` in github copilot or the equivalent skill, if you cannot execute it ask me to do it.
-5. **STOP. Ask: "Shall we move to the next test?"**
-6. Do not write the next test until the user explicitly approves.
+3. **Hard gate: compact the context** using `/compact` in GitHub Copilot or the equivalent available capability.
+   - If compaction is available, execute it before continuing.
+   - If compaction is unavailable, explicitly ask the user to compact the context and stop. The COMMIT phase is not complete until this happens.
+   - Do not ask to move to the next test, write more code, or present the task as complete before this gate is satisfied.
+4. **STOP. Ask: "Shall we move to the next test?"**
+5. Do not write the next test until the user explicitly approves.
 
 
 
@@ -104,6 +107,7 @@ Before every response, update:
 - Current behavior
 - Test List status
 - User approval status
+- Commit compaction status (`pending`, `completed`, or `user_action_required`)
 ---
 
 ## Core mocking rule
@@ -131,6 +135,11 @@ parallel work: the main agent keeps doing something else itself while the
 sub-agent runs. If the main agent has nothing else to do in the meantime,
 do not delegate — just do the task directly and show the work as you go.
 
+Skills are subagent-compatible: when a skill's work is independent from the
+main task, run it in a dedicated subagent and return only its concise,
+actionable result. Any Gradle test execution performed by a skill or subagent
+must use `/gradle-tests`; do not invoke `./gradlew` directly.
+
 ---
 
 ## Skills reference
@@ -144,13 +153,41 @@ do not delegate — just do the task directly and show the work as you go.
 | Kotlin/Spring: controller, use-case, adapter tests | `/backend-tests` |
 | React/Next.js: page, component, hook tests | `/frontend-tests` |
 | YAGNI check on test (RED) or production code (GREEN) | `/yagni` |
+| Execute one RED cycle in a subagent | `/red-phase` |
+| Execute one GREEN cycle in a subagent | `/green-phase` |
 | Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
+| Running Gradle tests with compact agent-oriented diagnostics | `/gradle-tests` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
 | Plan next tests to implement | `/behavior-plannings` |
 | Migrage controllers from one bff to another, this is allowed to not do tdd | `/migrate-controller-stack ` |
 
 
 Full content lives in `docs/skills/`.
+
+## Agent test execution
+
+When an agent needs to run tests in any Gradle project, it must use the
+`/gradle-tests` skill instead of invoking `./gradlew` directly. From the
+repository root, run:
+
+```bash
+.github/tools/gradle/run-tests.sh <project-directory>
+```
+
+Use the `check` task when the project instructions define it as the complete
+verification task:
+
+```bash
+.github/tools/gradle/run-tests.sh <project-directory> check
+```
+
+The command is optimized for agent token usage: stdout contains only a compact
+summary and actionable failure lines. Full Gradle output is saved to
+`<project-directory>/build/gradle-test-report/gradle.log`, and structured
+test diagnostics are saved to
+`<project-directory>/build/gradle-test-report/test-results.json`.
+
+Only use `--verbose` when detailed Gradle output is specifically required.
 
 ---
 
@@ -181,5 +218,11 @@ The workspace is indexed in Qdrant for semantic search. Each sub-project has its
 | `holidays-designSystems-componentlibrary` | `code_3c091510` |
 | `monitoring-datadog-ba-holidays` | `code_cbe3c1ab` |
 | `mars-rover` | `code_a8cafd45` |
+| `holidays-searchBrowse-e2e-tests` | `code_9ffc834e` |
+| `holidays-searchBrowse-infrastructure` | `code_bb2826b6` |
+| `holidays-searchBrowse-kong-deck` | `code_8a4ff8a1` |
+| `holidays-platform-akamai` | `code_829fb7d7` |
+| `holidays-searchBrowse-ndc-travelbox-connector` | `code_3fa35d43` |
+| `darwinC4Diagrams` | `code_b1da1aa1` |
 
 > **Note:** The `qdrant-rag` tool does not support custom collection names — names are derived from path hashes and cannot be changed. When searching, target the collection for the relevant sub-project. When in doubt, search across all active collections listed above.

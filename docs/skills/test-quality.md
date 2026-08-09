@@ -174,3 +174,9 @@ So this is an example of something wrong:
             )
 ```
 The above example should be the string representing the thing.
+## Subagent execution
+
+Run this review in a dedicated subagent. This is mandatory, including when the
+review appears small or straightforward. Return only actionable quality
+findings and the smallest required correction. If Gradle tests are required,
+use `/gradle-tests` and report only compact diagnostics.

@@ -48,3 +48,9 @@ Always output the plan in this format:
 
 **Next behavior to test:** `[Insert selected scenario]`
 **Ask:** "Does this list and the next target look good, or should we adjust?"
+# Subagent execution
+
+Run this planning skill in a dedicated subagent. This is mandatory, including
+when the behavior analysis appears small or straightforward. Return only the
+concise behavior list, selected target, and decisions needed by the parent
+agent. If validation requires Gradle tests, use `/gradle-tests`.

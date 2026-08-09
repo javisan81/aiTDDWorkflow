@@ -34,7 +34,14 @@ type(TICKET-123): short description
    - Backend: `./gradlew ktlintFormat`
    - Frontend: `npm run lint`
 2. **Run all tests** — confirm everything is green, in case the whole test suite has been executed before and since that moment no code change happened you can skip this step
-   - Backend: `./gradlew test`
+   - Backend: `.github/tools/gradle/run-tests.sh <project-directory> test`
    - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`
 3. **Verify the application boots** — the Spring context must load without errors.
    If context fails to start, fix it before committing. No exceptions.
+
+## Subagent execution
+
+Run the commit checklist in a dedicated subagent. This is mandatory, including
+when the checklist appears small or straightforward. Return only the checklist
+result and blocking findings. For backend test execution, use `/gradle-tests`
+and keep stdout compact; do not invoke `./gradlew test` directly.

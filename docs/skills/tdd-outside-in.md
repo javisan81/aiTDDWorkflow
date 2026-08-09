@@ -112,3 +112,9 @@ For the concrete patterns of each layer in this project:
 
 - **Backend** (Kotlin / Spring Boot): use the `/backend-tests` skill
 - **Frontend** (React / Next.js): use the `/frontend-tests` skill
+## Subagent execution
+
+Run TDD analysis or verification in a dedicated subagent. This is mandatory,
+including when the analysis appears small or straightforward. Return only the
+current phase, next allowed action, and concise evidence. When a Gradle test
+run is needed, use `/gradle-tests` and keep the output compact.

@@ -68,3 +68,9 @@ override fun execute() = roverRepository.find() ?: throw RoverNotDeployedExcepti
 ```
 One line. No domain logic beyond what the controller can express directly.
 `GetRoverPositionController` now injects `RoverRepository` and calls `find()` itself.
+# Subagent execution
+
+Run this skill in a dedicated subagent. This is mandatory, including when the
+review appears small or straightforward. Return only the actionable findings
+and completed changes to the parent agent. If test execution is required in a
+Gradle project, use `/gradle-tests` and report only its compact result.

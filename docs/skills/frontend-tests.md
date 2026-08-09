@@ -150,3 +150,10 @@ or constants from one into the other.
 - Remote imports in the shell must use `withClientImport()` — never `import()` directly
 - `reactStrictMode: false` in the presentation shell — intentional, do not enable
   (some TBX endpoints are non-idempotent)
+# Subagent execution
+
+Run this skill in a dedicated subagent. This is mandatory, including when the
+frontend test work appears small or straightforward. Return only the concise
+test result and actionable failures. Use the repository's compact test runner
+when one exists; for Gradle projects this is `/gradle-tests`. Do not include
+full command logs unless requested.

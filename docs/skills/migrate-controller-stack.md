@@ -60,3 +60,9 @@ We will execute this in two distinct phases:
 
 ### Example of Usage
 Apply skill migrate-controller-stack with SOURCE_SERVICE=searchbrowse-bff DEST_SERVICE=flight-bff CONTROLLER_NAME=CabinUpgradesController
+## Subagent execution
+
+Run this migration skill in a dedicated subagent. This is mandatory, including
+when the migration scope appears small or straightforward. Return only
+completed moves, remaining blockers, and concise verification results. If
+Gradle tests are required, use `/gradle-tests`.
