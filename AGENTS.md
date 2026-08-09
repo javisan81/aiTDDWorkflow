@@ -26,9 +26,10 @@ If the user talks about doing a refactor and we are green (all tests passes) we 
 Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-in` for layer progression, TPP, and test explosion detection.
 
 ### Step 0 — PLAN (Once per task, and updated each cycle)
-1. Run `/behavior-planning` skill to create the initial Test List.
-2. **STOP. Ask for approval on the list before starting RED.**
-3. Re-run `/behavior-planning` at the start of each RED phase to adapt the list.
+1. Check for an existing `.tdd-state.json` at the root/sub-project. If present, read it to restore current session state.
+2. Run `/behavior-planning` skill to create or update the Test List.
+3. **STOP. Ask for approval on the list before starting RED.**
+4. Re-run `/behavior-planning` at the start of each RED phase to adapt the list.
 
 ### Step 1 — RED
 1. Run `/behavior-planning` to pick the next target behavior from the Test List.
@@ -58,12 +59,13 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 4 — COMMIT
 1. Run `/commit` skill — follow every step in the pre-commit checklist.
 2. Commit with a message that explains the **intention**, not the changes.
-3. **Hard gate: compact the context** using `/compact` in GitHub Copilot or the equivalent available capability.
+3. Update `.tdd-state.json` with the current behavior marked as `DONE` and set `commit_compaction_status` to `pending`.
+4. **Hard gate: compact the context** using `/compact` in GitHub Copilot or the equivalent available capability.
    - If compaction is available, execute it before continuing.
    - If compaction is unavailable, explicitly ask the user to compact the context and stop. The COMMIT phase is not complete until this happens.
    - Do not ask to move to the next test, write more code, or present the task as complete before this gate is satisfied.
-4. **STOP. Ask: "Shall we move to the next test?"**
-5. Do not write the next test until the user explicitly approves.
+5. **STOP. Ask: "Shall we move to the next test?"**
+6. Do not write the next test until the user explicitly approves.
 
 
 
@@ -78,13 +80,14 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 
 ### Mandatory TDD Phase State
 
-At all times, maintain and state these three values internally:
+At all times, maintain and state these values internally, and mirror them in `.tdd-state.json` at the root:
 
 - `PHASE`: PLAN | RED | GREEN | REFACTOR | COMMIT
 - `CURRENT_BEHAVIOR`: exactly one behavior from the Test List
 - `NEXT_ALLOWED_ACTION`: the only action permitted by the current phase
 
 Every response involving code work must begin its tool-use reasoning by checking:
+0. **Reading `.tdd-state.json`** (if starting a session or after context compaction)
 1. Current phase
 2. Current behavior
 3. Required approval or transition
@@ -100,31 +103,12 @@ COMMIT -> RED: user approves moving to the next behavior
 Never skip a transition, combine phases, or start another test before COMMIT.
 After each phase, stop and request the required approval.
 
-Also add a persistent checklist requirement:
-
-Before every response, update:
+Before every response, update both internal state and `.tdd-state.json`:
 - Phase
 - Current behavior
 - Test List status
 - User approval status
 - Commit compaction status (`pending`, `completed`, or `user_action_required`)
----
-
-## Core mocking rule
-
-> **Only mock interfaces you own and control.** If you cannot change the source code, do not mock it.
-
-Use the `/test-doubles` skill for the full boundary reference, the 5 double types,
-and guidance on when to use fakes vs mocks.
-
----
-
-## Commits
-
-See `/commit` skill (`docs/tdd/commit.md`) for the full rules.
-The short version: one commit per GREEN, ticket number mandatory, intention-based message.
-
----
 
 ## Sub-agents & Phase Isolation
 
@@ -186,36 +170,11 @@ Only use `--verbose` when detailed Gradle output is specifically required.
 
 ## Semantic Code Search (qdrant-rag), just in case qdrant-rag is configured as a mcp
 
-The workspace is indexed in Qdrant for semantic search. Each sub-project has its own collection (the tool auto-generates collection names from path hashes).
+The workspace is indexed in Qdrant for semantic search. Target the active sub-project collection automatically based on the working directory path hash.
 
 **Rules:**
 - Always use the `qdrant-rag` MCP tool for code search when available — prefer it over `grep` for conceptual/semantic queries.
-- **At the start of every working session**, run `reindex_changes` on the collection(s) for the sub-project(s) you are about to work on. This is fast and ensures the index reflects the latest code.
-- **Never** index from the repo root (`/Users/javierlopezfernandez/IdeaProjects/bah`) — the root `.gitignore` uses `*` and blocks everything. Always index sub-projects individually.
+- **At the start of every working session**, run `reindex_changes` on the collection for the sub-project you are about to work on. This is fast and ensures the index reflects the latest code.
+- **Never** index from the repo root — the root `.gitignore` uses `*` and blocks everything. Always index sub-projects individually.
 - Only run a full `index_codebase` (with `forceReindex: true`) when a sub-project has never been indexed or its collection has been deleted. For all other cases, use `reindex_changes`.
 - Ignore patterns must match `.ragignore` (see root `.ragignore`). Pass them via `ignorePatterns` on every `index_codebase` call.
-
-**Active collections (as of last reindex):**
-
-| Sub-project | Collection |
-|---|---|
-| `searchBrowseBff` | `code_2890ade2` |
-| `holidays-manageTrip-service` | `code_c1ed0005` |
-| `holidays-manageTrip-presentation` | `code_8cf8edf0` |
-| `holidays-searchBrowse-presentation` | `code_b7836da0` |
-| `holidays-searchBrowse-presentationprovider` | `code_2995f24f` |
-| `holidays-searchBrowse-flight-bff` | `code_0564df04` |
-| `holidays-platform-infra` | `code_37d18fe6` |
-| `flight-orders-adapter-service` | `code_b3164bd8` |
-| `payments-payments-orchestrator` | `code_bedc9270` |
-| `holidays-designSystems-componentlibrary` | `code_3c091510` |
-| `monitoring-datadog-ba-holidays` | `code_cbe3c1ab` |
-| `mars-rover` | `code_a8cafd45` |
-| `holidays-searchBrowse-e2e-tests` | `code_9ffc834e` |
-| `holidays-searchBrowse-infrastructure` | `code_bb2826b6` |
-| `holidays-searchBrowse-kong-deck` | `code_8a4ff8a1` |
-| `holidays-platform-akamai` | `code_829fb7d7` |
-| `holidays-searchBrowse-ndc-travelbox-connector` | `code_3fa35d43` |
-| `darwinC4Diagrams` | `code_b1da1aa1` |
-
-> **Note:** The `qdrant-rag` tool does not support custom collection names — names are derived from path hashes and cannot be changed. When searching, target the collection for the relevant sub-project. When in doubt, search across all active collections listed above.
