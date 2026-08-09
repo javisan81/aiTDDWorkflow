@@ -51,7 +51,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
    - Use comments to guide renaming, extraction, deduplication — then remove the comments.
    - If there is duplicated code, extract to a method with a parameter. Remove the comments.
 2. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming.
-3. run /anemic-usecase skill to check if we have anemic usecase and then remove the usecase
+3. run `/anemic-usecase` skill to check if we have anemic usecase and then remove the usecase
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
 
