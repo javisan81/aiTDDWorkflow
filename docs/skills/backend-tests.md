@@ -4,6 +4,7 @@ description: >
   Use when writing Kotlin/Spring Boot tests: controller tests with @WebMvcTest,
   use-case unit tests with InMemory fakes, or JPA/HTTP adapter integration tests.
   Covers MockMvc Kotlin DSL, MockK, Kotest assertions, and test naming conventions.
+recommended_model: gpt-5.6-luna
 ---
 
 # Backend Test Patterns (Kotlin / Spring Boot)

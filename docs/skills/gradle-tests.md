@@ -1,6 +1,7 @@
 ---
 name: gradle-tests
 description: Run all tests in a Gradle project and produce structured failure reports.
+recommended_model: gpt-5-mini
 ---
 
 # /gradle-tests Skill

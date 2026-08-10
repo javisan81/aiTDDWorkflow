@@ -5,6 +5,7 @@ description: >
   component tests with child component mocks, or API hook tests with MSW.
   Covers query rules (no data-testid), semantic HTML, ALTO design system,
   Module Federation notes, and domain boundary rules.
+recommended_model: gpt-5.6-luna
 ---
 
 # Frontend Test Patterns (React / Next.js)

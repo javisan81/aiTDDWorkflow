@@ -1,6 +1,7 @@
 ---
 name: green-phase
 description: Execute one TDD GREEN cycle as a delegated subagent.
+recommended_model: gpt-5.3-codex
 ---
 
 # GREEN Phase

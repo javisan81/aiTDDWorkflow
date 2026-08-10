@@ -1,6 +1,7 @@
 ---
 name: anemic-use-case-check
 description: Checklist to identify and refactor anemic use cases in the architecture.
+recommended_model: gpt-5.4-mini
 ---
 
 # Anemic Use Case Check

@@ -1,6 +1,7 @@
 ---
 name: migrate-controller-stack
 description: Migrates a controller, its complete lower-layer stack, and all full-stack test suites from one service/BFF to another, purging unused code.
+recommended_model: gpt-5.6-luna
 ---
 
 # Skill: Migrate Controller & Full Stack

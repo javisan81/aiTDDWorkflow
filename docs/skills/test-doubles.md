@@ -3,7 +3,8 @@ name: test-doubles
 description: >
   Use when choosing between fake, mock, stub, spy, or dummy. Use when deciding whether
   to use InMemory* vs mockk, MSW vs axios-mock-adapter, or when a test explosion
-  warning is needed. Covers unit vs integration test distinction.
+  warning is needed.
+recommended_model: gpt-5.4-mini
 ---
 
 # Test Types, Test Doubles and Mocking

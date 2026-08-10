@@ -4,6 +4,7 @@ description: >
   Use when starting a new feature, writing the first test, deciding which layer to test first,
   or doing TDD in a layered architecture. Explains the double loop, layer progression,
   TPP, and test explosion warning.
+recommended_model: gpt-5.6-luna
 ---
 
 # Outside-In TDD (Double Loop)

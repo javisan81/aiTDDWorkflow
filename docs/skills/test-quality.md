@@ -5,6 +5,7 @@ description: >
   or reviewing whether a test body contains signal or noise. Covers ANY_ prefix,
   scalar vs instance fixtures, copy-based variants, .example.ts fixture files, and full
   JSON contract assertions.
+recommended_model: gpt-5.4-mini
 ---
 
 # Test Quality Rules

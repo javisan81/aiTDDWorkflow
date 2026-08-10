@@ -1,6 +1,7 @@
 ---
 name: behavior-planning
 description: Plan behaviors and manage the test list at the start of tasks and RED phases.
+recommended_model: gpt-5.4-mini
 ---
 
 # /behavior-planning Skill

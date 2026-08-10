@@ -4,6 +4,7 @@ description: >
   Use when designing folder structure, deciding whether to extract a port or domain service,
   discussing hexagonal or onion architecture, or reviewing whether domain classes have
   framework imports. Covers evolutionary design, port naming, and ArchUnit rules.
+recommended_model: gpt-5.6-luna
 ---
 
 # Architecture: Hexagonal — Evolutionary, Not Upfront

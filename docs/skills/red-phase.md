@@ -1,6 +1,7 @@
 ---
 name: red-phase
 description: Execute one TDD RED cycle as a delegated subagent.
+recommended_model: gpt-5.3-codex
 ---
 
 # RED Phase

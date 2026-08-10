@@ -4,6 +4,7 @@ description: >
   Run in the RED phase (on the test just written) and in the GREEN phase (on the production
   code just written). Prevents speculative code, over-engineering, and YAGNI violations
   before they are committed.
+recommended_model: gpt-5-mini
 ---
 
 # YAGNI Check
