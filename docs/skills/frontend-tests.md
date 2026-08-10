@@ -156,5 +156,5 @@ or constants from one into the other.
 Run this skill in a dedicated subagent. This is mandatory, including when the
 frontend test work appears small or straightforward. Return only the concise
 test result and actionable failures. Use the repository's compact test runner
-when one exists; for Gradle projects this is `/gradle-tests`. Do not include
+when one exists. Do not include
 full command logs unless requested.

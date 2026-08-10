@@ -4,7 +4,6 @@ description: >
   Use when choosing between fake, mock, stub, spy, or dummy. Use when deciding whether
   to use InMemory* vs mockk, MSW vs axios-mock-adapter, or when a test explosion
   warning is needed.
-recommended_model: gpt-5.4-mini
 ---
 
 # Test Types, Test Doubles and Mocking
@@ -105,9 +104,4 @@ When you change production code, **find all mocks of that interface and update t
 
 Trade-off: fakes are safer (you can write contract tests); mocks are faster (design APIs
 without implementing them). Use both consciously.
-## Subagent execution
 
-Run this design analysis in a dedicated subagent. This is mandatory, including
-when the analysis appears small or straightforward. Return only the
-recommended double, boundary, and rationale. If Gradle tests are needed to
-validate the choice, use `/gradle-tests`.

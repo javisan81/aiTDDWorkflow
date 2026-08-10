@@ -5,7 +5,6 @@ description: >
   or reviewing whether a test body contains signal or noise. Covers ANY_ prefix,
   scalar vs instance fixtures, copy-based variants, .example.ts fixture files, and full
   JSON contract assertions.
-recommended_model: gpt-5.4-mini
 ---
 
 # Test Quality Rules
@@ -175,9 +174,7 @@ So this is an example of something wrong:
             )
 ```
 The above example should be the string representing the thing.
-## Subagent execution
+---
+## YAGNI
+Run `/yagni` checklist on the test before showing it to the user. If yagni is not passing explains it to the customer.
 
-Run this review in a dedicated subagent. This is mandatory, including when the
-review appears small or straightforward. Return only actionable quality
-findings and the smallest required correction. If Gradle tests are required,
-use `/gradle-tests` and report only compact diagnostics.

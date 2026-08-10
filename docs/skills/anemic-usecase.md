@@ -1,7 +1,6 @@
 ---
 name: anemic-use-case-check
 description: Checklist to identify and refactor anemic use cases in the architecture.
-recommended_model: gpt-5.4-mini
 ---
 
 # Anemic Use Case Check
@@ -69,9 +68,3 @@ override fun execute() = roverRepository.find() ?: throw RoverNotDeployedExcepti
 ```
 One line. No domain logic beyond what the controller can express directly.
 `GetRoverPositionController` now injects `RoverRepository` and calls `find()` itself.
-# Subagent execution
-
-Run this skill in a dedicated subagent. This is mandatory, including when the
-review appears small or straightforward. Return only the actionable findings
-and completed changes to the parent agent. If test execution is required in a
-Gradle project, use `/gradle-tests` and report only its compact result.

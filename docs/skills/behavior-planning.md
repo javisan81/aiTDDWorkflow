@@ -54,4 +54,4 @@ Always output the plan in this format:
 Run this planning skill in a dedicated subagent. This is mandatory, including
 when the behavior analysis appears small or straightforward. Return only the
 concise behavior list, selected target, and decisions needed by the parent
-agent. If validation requires Gradle tests, use `/gradle-tests`.
+agent.

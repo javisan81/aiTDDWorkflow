@@ -59,9 +59,13 @@ adapter.output.*     ←  domain ports
 ```
 
 Domain classes must never import from `adapter.*`, `org.springframework.*`, or `jakarta.persistence.*`.
+
+## check anemic use cases
+Run `/anemic-usecase` skill to check if we have anemic usecase and then remove the usecase if it not required.
+
+
 ## Subagent execution
 
 Run this architecture review in a dedicated subagent. This is mandatory,
 including when the review appears small or straightforward. Return only
-actionable violations and affected locations. If the review requires Gradle
-tests, use `/gradle-tests` and return its compact diagnostics.
+actionable violations and affected locations.

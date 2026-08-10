@@ -4,7 +4,6 @@ description: >
   Run in the RED phase (on the test just written) and in the GREEN phase (on the production
   code just written). Prevents speculative code, over-engineering, and YAGNI violations
   before they are committed.
-recommended_model: gpt-5-mini
 ---
 
 # YAGNI Check
@@ -55,9 +54,4 @@ it is a YAGNI violation to leave it in "just in case". Trace the **whole call ch
 remove it everywhere: the prop's own type, every parent component that passes it down, and
 any now-unused helper that only existed to compute it. A prop removal is incomplete if any
 call site still passes the old value or any helper is now unreferenced.
-## Subagent execution
 
-Run this checklist in a dedicated subagent. This is mandatory, including when
-the checklist appears small or straightforward. Return only the YAGNI decision
-and concise evidence. If validation requires Gradle tests, use `/gradle-tests`
-and avoid returning raw command output.

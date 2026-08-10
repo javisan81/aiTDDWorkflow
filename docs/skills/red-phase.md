@@ -1,17 +1,17 @@
 ---
 name: red-phase
 description: Execute one TDD RED cycle as a delegated subagent.
-recommended_model: gpt-5.3-codex
 ---
 
 # RED Phase
 
-Run as a dedicated subagent. This skill performs only the RED action selected
-by `AGENTS.md`:
+This skill performs only the RED action selected by `AGENTS.md`:
 
 1. Write exactly one failing test for the current behavior.
-2. Run the smallest relevant existing test command.
-3. Confirm the test fails for the intended reason.
+2. Mock if required using the `/test-doubles` skill
+3. Run the smallest relevant existing test command.
+4. Confirm the test fails for the intended reason.
+5. run `/test-quality` to understand if the test is good enough. This step and previous one can be executed in parallel.
 
 ## Core mocking rule
 
