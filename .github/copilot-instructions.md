@@ -2,9 +2,11 @@
 
 This is a monorepo for the **Darwin** platform at British Airways Holidays. It contains backend services (Kotlin/Spring Boot), frontend micro-frontends (Next.js 15 + Module Federation), infrastructure (Terraform), and more.
 
-**Mandatory Rule:** Read and adhere strictly to `AGENTS.md` for all workflows, TDD cycles, and skill references in this repository.
-
-Each sub-project has its own `AGENTS.md` or `.github/copilot-instructions.md` with detailed, project-specific guidance. **Always read the sub-project instructions before working in a sub-directory, use those instructions in conjuction with the root AGENTS.md, if they are opposite, always the root AGENTS.md wins.**
+**Mandatory Rule:** The repository-root `AGENTS.md` is the sole source of truth
+for all workflows, TDD cycles, and skill references in this repository. Other
+`AGENTS.md` files, `.github/copilot-instructions.md` files, and custom agent
+definitions may extend it with project-specific details, but must not override
+or replace it.
 
 ---
 

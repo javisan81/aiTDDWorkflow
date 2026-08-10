@@ -4,15 +4,15 @@
 
 ---
 
-## AGENTS.md Hierarchy
+## Instruction Authority
 
-This is the **root AGENTS.md** — the single source of truth for all projects in this monorepo.
-Each sub-project may have its own `AGENTS.md` with project-specific guidance (tech stack, commands, conventions).
+This repository-root `AGENTS.md` is the **sole source of truth** for all work in
+this monorepo.
 
-**Rules:**
-- Always read the sub-project `AGENTS.md` alongside this one when working in a sub-directory.
-- The sub-project `AGENTS.md` extends this one — it adds context, it does not replace it.
-- If there is any conflict between a sub-project `AGENTS.md` and this file, **this file prevails**.
+Other `AGENTS.md` files, `.github/copilot-instructions.md` files, and custom
+agent definitions may extend this guidance with project-specific details, but
+must not override or replace it. If they conflict with this file, follow this
+file.
 
 ---
 
@@ -35,24 +35,19 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 1. Run `/behavior-planning` to pick the next target behavior from the Test List.
 2. Ask the user about expected test quality (if not already established for this session)
 3. Run `/red-phase` in a dedicated subagent to write **one** failing test, run it, and confirm it fails.
-4. Run `/yagni` checklist on the test before showing it to the user.
-5. run `/test-quality` to understand if the test is good enough.
-6. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
-7. Do not write any production code until the user explicitly approves.
+4. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
+5. Do not write any production code until the user explicitly approves.
 
 ### Step 2 — GREEN
 1. Run `/green-phase` in a dedicated subagent to write the **minimum** code to make the test pass, run all tests, and confirm green.
-2. Run `/yagni` checklist on the production code just written before showing it to the user, to be sure your code is the minimum one to make the test to pass.
-3. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
-4. Do not refactor until the user explicitly approves.
-5. Mock if required using the /test-doubles skill
+2. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
+3. Do not refactor until the user explicitly approves.
 
 ### Step 3 — REFACTOR
 1. Look for code smells. Apply one refactor. Run all tests. Confirm still green.
    - Use comments to guide renaming, extraction, deduplication — then remove the comments.
    - If there is duplicated code, extract to a method with a parameter. Remove the comments.
-2. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming.
-3. run `/anemic-usecase` skill to check if we have anemic usecase and then remove the usecase
+3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming.
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
 
@@ -170,7 +165,7 @@ Only use `--verbose` when detailed Gradle output is specifically required.
 
 ## Semantic Code Search (qdrant-rag), just in case qdrant-rag is configured as a mcp
 
-The workspace is indexed in Qdrant for semantic search. Target the active sub-project collection automatically based on the working directory path hash.
+The workspace is indexed in Qdrant for semantic search, directories under bah, not bah base folder. Target the active sub-project collection automatically based on the working directory path hash.
 
 **Rules:**
 - Always use the `qdrant-rag` MCP tool for code search when available — prefer it over `grep` for conceptual/semantic queries.
