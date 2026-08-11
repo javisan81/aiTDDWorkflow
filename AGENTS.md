@@ -43,6 +43,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 1. Run `/green-phase` to write the **minimum** code to make the test pass, run all tests, and confirm green.
 2. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
 3. Do not refactor until the user explicitly approves.
+4. Save in the context that we are green and all tests passes.
 
 ### Step 3 — REFACTOR
 1. Look for code smells. Apply one refactor. Run all tests. Confirm still green.
@@ -51,9 +52,11 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming.
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
+6. Save in the context that we are green and all tests passes.
+
 
 ### Step 4 — COMMIT
-1. Run `/commit` skill — follow every step in the pre-commit checklist.
+1. Run `/commit` skill — follow every step in the pre-commit checklist, you can skip tests if the context says we are green.
 2. Commit with a message that explains the **intention**, not the changes.
 3. Update `.tdd-state.json` with the current behavior marked as `DONE` and set `commit_compaction_status` to `pending`.
 4. **Hard gate: compact the context** using `/compact` in GitHub Copilot or the equivalent available capability.
