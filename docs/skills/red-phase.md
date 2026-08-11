@@ -1,6 +1,6 @@
 ---
 name: red-phase
-description: Execute one TDD RED cycle as a delegated subagent.
+description: Execute one TDD RED cycle.
 ---
 
 # RED Phase

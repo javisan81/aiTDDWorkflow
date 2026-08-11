@@ -22,6 +22,7 @@ Each step below ends your response. Do not combine steps. Do not anticipate the 
 Write **just one test** — never more.
 
 If the user talks about doing a refactor and we are green (all tests passes) we can go to refactor stage directly and continue the cycle in that step.
+If the user explicitely says not using TDD then you can skip these steps, and follow their approach.
 
 Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-in` for layer progression, TPP, and test explosion detection.
 
@@ -34,12 +35,12 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 1 — RED
 1. Run `/behavior-planning` to pick the next target behavior from the Test List.
 2. Ask the user about expected test quality (if not already established for this session)
-3. Run `/red-phase` in a dedicated subagent to write **one** failing test, run it, and confirm it fails.
+3. Run `/red-phase` to write **one** failing test, run it, and confirm it fails.
 4. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
 5. Do not write any production code until the user explicitly approves.
 
 ### Step 2 — GREEN
-1. Run `/green-phase` in a dedicated subagent to write the **minimum** code to make the test pass, run all tests, and confirm green.
+1. Run `/green-phase` to write the **minimum** code to make the test pass, run all tests, and confirm green.
 2. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
 3. Do not refactor until the user explicitly approves.
 
@@ -125,8 +126,8 @@ Subagents must operate with clean, minimal context and return only the required 
 | Kotlin/Spring: controller, use-case, adapter tests | `/backend-tests` |
 | React/Next.js: page, component, hook tests | `/frontend-tests` |
 | YAGNI check on test (RED) or production code (GREEN) | `/yagni` |
-| Execute one RED cycle in a subagent | `/red-phase` |
-| Execute one GREEN cycle in a subagent | `/green-phase` |
+| Execute one RED cycle  | `/red-phase` |
+| Execute one GREEN cycle | `/green-phase` |
 | Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
 | Plan next tests to implement | `/behavior-plannings` |
@@ -135,32 +136,6 @@ Subagents must operate with clean, minimal context and return only the required 
 
 Full content lives in `docs/skills/`.
 
-## Agent test execution
-
-When an agent needs to run tests in any Gradle project, it must use the
-`/gradle-tests` skill instead of invoking `./gradlew` directly. From the
-repository root, run:
-
-```bash
-.github/tools/gradle/run-tests.sh <project-directory>
-```
-
-Use the `check` task when the project instructions define it as the complete
-verification task:
-
-```bash
-.github/tools/gradle/run-tests.sh <project-directory> check
-```
-
-The command is optimized for agent token usage: stdout contains only a compact
-summary and actionable failure lines. Full Gradle output is saved to
-`<project-directory>/build/gradle-test-report/gradle.log`, and structured
-test diagnostics are saved to
-`<project-directory>/build/gradle-test-report/test-results.json`.
-
-Only use `--verbose` when detailed Gradle output is specifically required.
-
----
 
 ## Semantic Code Search (qdrant-rag), just in case qdrant-rag is configured as a mcp
 

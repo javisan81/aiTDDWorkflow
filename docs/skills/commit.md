@@ -34,7 +34,8 @@ type(TICKET-123): short description
 1. **Format code**
    - Backend: `./gradlew ktlintFormat`
    - Frontend: `npm run lint`
-2. **Run all tests** — confirm everything is green, in case the whole test suite has been executed before and since that moment no code change happened you can skip this step
+2. **Run all tests** — confirm everything is green, in case the whole test suite has been executed before and since that moment no code change happened you can skip this step. 
+   You can run the affected tests in case the number of tests to execute is higher that 1500 and you are in a gradle project. 
    - Backend: `.github/tools/gradle/run-tests.sh <project-directory> test`
    - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`
 3. **Verify the application boots** — the Spring context must load without errors.

@@ -1,6 +1,6 @@
 ---
 name: green-phase
-description: Execute one TDD GREEN cycle as a delegated subagent.
+description: Execute one TDD GREEN cycle.
 ---
 
 # GREEN Phase
