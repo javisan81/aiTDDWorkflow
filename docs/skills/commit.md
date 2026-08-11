@@ -44,5 +44,4 @@ type(TICKET-123): short description
 
 Run the commit checklist in a dedicated subagent. This is mandatory, including
 when the checklist appears small or straightforward. Return only the checklist
-result and blocking findings. For backend test execution, use `/gradle-tests`
-and keep stdout compact; do not invoke `./gradlew test` directly.
+result and blocking findings.

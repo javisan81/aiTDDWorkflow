@@ -133,5 +133,4 @@ fun `adds item to cart and returns updated total`() { ... }
 
 Run this skill in a dedicated subagent. This is mandatory, including when the
 test work appears small or straightforward. Keep the response focused on the
-test outcome and relevant diagnostics. For Gradle test execution, always use
-`/gradle-tests`; do not print raw Gradle output unless explicitly requested.
+test outcome and relevant diagnostics.

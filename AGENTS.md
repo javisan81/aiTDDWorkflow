@@ -128,7 +128,6 @@ Subagents must operate with clean, minimal context and return only the required 
 | Execute one RED cycle in a subagent | `/red-phase` |
 | Execute one GREEN cycle in a subagent | `/green-phase` |
 | Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
-| Running Gradle tests with compact agent-oriented diagnostics | `/gradle-tests` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
 | Plan next tests to implement | `/behavior-plannings` |
 | Migrage controllers from one bff to another, this is allowed to not do tdd | `/migrate-controller-stack ` |
