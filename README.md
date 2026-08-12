@@ -33,6 +33,39 @@ Explore the `/docs` folder (if available) or the base scripts to adapt the workf
 3. **Environment Setup:**
 If you use automated scripts from this repository, make sure to install the necessary dependencies and initialize your environment variables (e.g., `.env` with your API keys).
 
+### Option B: Link an existing directory containing your projects
+
+If you already have a local directory containing your projects and want to link it to the remote GitHub repository:
+
+    Open your terminal in the root of your existing directory:
+    Bash
+```bash
+    cd /path/to/your/projects-directory
+```
+    Initialize Git in that directory (if it is not already a local repository):
+    Bash
+```bash
+    git init
+```
+    Link your directory to the remote repository:
+    Bash
+```bash
+    git remote add origin https://github.com/javisan81/aiTDDWorkflow.git or git@github.com:javier-lopez-fernandez_iagl/aiWorkflow.git
+```
+    Fetch and check out the remote branch (to pull documentation and base configurations):
+    Bash
+```bash
+    git fetch origin
+    git checkout -b main origin/main
+```
+    (Optional) Stage, commit, and push your existing local files to the repository:
+    Bash
+
+    git add .
+    git commit -m "feat: link existing local directory"
+    git push -u origin main
+```
+
 ## 🔍 Optional: Semantic Code Search (qdrant-rag)
 
 This workspace supports **semantic code search** via a local Qdrant vector database, integrated with GitHub Copilot CLI through the `qdrant-rag` MCP server. This is **entirely optional** but significantly improves code navigation in large codebases.
