@@ -36,13 +36,11 @@ type(TICKET-123): short description
 
 1. **Format code**
    - Backend: `./gradlew ktlintFormat`
-   - Frontend: `npm run lint`
-2. **Run all tests** — confirm everything is green, in case the whole test suite has been executed before and since that moment no code change happened you can skip this step. 
-   You can run just the affected tests in case the number of tests to execute is higher that 1500 and you are in a gradle project. And also you can skip this if the context says this was running previously.
+   - Frontend: `npm run format:fix`
+2. **Run all tests** — confirm everything is green, in case the whole test suite has been executed in less than 5 mins ago and since that moment no code change happened you can skip this step, read the .tdd-state.json file to confirm this. 
+   You can run just the affected tests in case the number of tests to execute is higher that 1700 and you are in a gradle project. And also you can skip this if the context says this was running previously.
    - Backend: use gradlew
-   - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`
-3. **Verify the application boots** — the Spring context must load without errors.
-   If context fails to start, fix it before committing. No exceptions.
+   - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`, in frontend dont run-in-band the tests
 
 ## Subagent execution
 

@@ -22,7 +22,8 @@ When starting a task:
    Identify the files to minimize the context size using a local rag if configured as mcp or you have access to it. 
 2. **Draft Test List:** Write a bulleted list of high-level behaviors ordered by complexity (simplest first).
 3. **Format:** Use descriptive, domain-focused titles (e.g., `* Should reject order when inventory is zero`).
-4. **Validation:** Present the list to the user and wait for explicit approval before moving to Step 1 (RED).
+4. **Check the list of tests:** Check that the list of tests will change something in production, if this is not clear enough reduce the list to the steps that will produce a change in production code.
+5. **Validation:** Present the list to the user and wait for explicit approval before moving to Step 1 (RED).
 
 ---
 

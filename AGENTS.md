@@ -14,6 +14,7 @@ agent definitions may extend this guidance with project-specific details, but
 must not override or replace it. If they conflict with this file, follow this
 file.
 
+If you need to work in a project/subproject change dir to that project and run all commands under that folder.
 ---
 
 ## TDD Protocol — Follow this mechanically, no exceptions for new features
@@ -49,6 +50,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 1. Look for code smells. Apply one refactor. Run all tests. Confirm still green.
    - Use comments to guide renaming, extraction, deduplication — then remove the comments.
    - If there is duplicated code, extract to a method with a parameter. Remove the comments.
+   - If all tests passes mark the time when they passes in the .tdd-state.json file
 3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming.
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
@@ -59,13 +61,8 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 1. Run `/commit` skill — follow every step in the pre-commit checklist, you can skip tests if the context says we are green.
 2. Commit with a message that explains the **intention**, not the changes.
 3. Update `.tdd-state.json` with the current behavior marked as `DONE` and set `commit_compaction_status` to `pending`.
-4. **Hard gate: compact the context** using `/compact` in GitHub Copilot or the equivalent available capability.
-   - If compaction is available, execute it before continuing.
-   - If compaction is unavailable, explicitly ask the user to compact the context and stop. The COMMIT phase is not complete until this happens.
-   - Do not ask to move to the next test, write more code, or present the task as complete before this gate is satisfied.
-5. **STOP. Ask: "Shall we move to the next test?"**
-6. Do not write the next test until the user explicitly approves.
-
+4. **STOP. Ask: "Shall we move to the next test?"**
+5. Do not write the next test until the user explicitly approves.
 
 
 ### Violations — stop and flag immediately
@@ -113,7 +110,7 @@ Before every response, update both internal state and `.tdd-state.json`:
 
 By default, execute single-step reasoning in the main agent context.
 
-However, **you MUST delegate to a dedicated subagent** if you use a skill that says to be executed in a subagent or if there is an explicit rule to do it.
+However, **you MUST delegate to a dedicated subagent** if you use a skill that says to be executed in a subagent or if there is an explicit rule to do it in the main AGENTS.md.
 Subagents must operate with clean, minimal context and return only the required output or failure diagnostics to the main agent.
 
 ---
