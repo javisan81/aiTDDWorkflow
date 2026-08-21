@@ -5,7 +5,7 @@ description: Execute one TDD GREEN cycle.
 
 # GREEN Phase
 
-This skill performs only the GREEN action selected by `AGENTS.md`:
+This skill performs only the GREEN action selected by `AGENTS.md`, run it in the main agent:
 
 1. Write the minimum production code needed to pass the current failing test.
 2. Run all existing tests for the affected project.

@@ -5,14 +5,14 @@ description: Execute one TDD RED cycle.
 
 # RED Phase
 
-This skill performs only the RED action selected by `AGENTS.md`:
+This skill performs only the RED action selected by `AGENTS.md`, **run it in the main agent**:
 
 1. Write exactly one failing test for the current behavior.
 2. Mock if required using the `/test-doubles` skill
 3. Run the smallest relevant existing test command, this means run the tests in the file you updated the red test.
 4. Confirm the test fails for the intended reason.
 5. run `/test-quality` to understand if the test is good enough. This step and previous one can be executed in parallel.
-6. show the diff of the current change in tests to the customer with git diff
+6. show the diff of the current change in tests to the customer with git diff and the files changed
 
 ## Core mocking rule
 

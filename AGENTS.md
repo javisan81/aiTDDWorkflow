@@ -126,8 +126,8 @@ Subagents must operate with clean, minimal context and return only the required 
 | Kotlin/Spring: controller, use-case, adapter tests | `/backend-tests` |
 | React/Next.js: page, component, hook tests | `/frontend-tests` |
 | YAGNI check on test (RED) or production code (GREEN) | `/yagni` |
-| Execute one RED cycle  | `/red-phase` |
-| Execute one GREEN cycle | `/green-phase` |
+| Execute one RED cycle always in the main agent, no subagents | `/red-phase` |
+| Execute one GREEN cycle always in the main agent, no subagents | `/green-phase` |
 | Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
 | Plan next tests to implement | `/behavior-plannings` |
