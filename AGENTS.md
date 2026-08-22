@@ -19,7 +19,7 @@ If you need to work in a project/subproject change dir to that project and run a
 
 ## TDD Protocol — Follow this mechanically, no exceptions for new features
 
-Each step below ends your response. Do not combine steps. Do not anticipate the next step.
+Do not combine steps. Do not anticipate the next step.
 Write **just one test** — never more.
 
 If the user talks about doing a refactor and we are green (all tests passes) we can go to refactor stage directly and continue the cycle in that step.
@@ -30,27 +30,26 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 0 — PLAN (Once per task, and updated each cycle)
 1. Check for an existing `.tdd-state.json` at the root/sub-project. If present, read it to restore current session state.
 2. Run `/behavior-planning` skill to create or update the Test List.
-3. **STOP. Ask for approval on the list before starting RED.**
-4. Re-run `/behavior-planning` at the start of each RED phase to adapt the list.
+3. Paint the list of tests planned by the previous step.
+4. **STOP. Ask for approval on the list before starting RED.**
 
 ### Step 1 — RED
-1. Run `/behavior-planning` to pick the next target behavior from the Test List.
+1. Pick the next target behavior from the Test List.
 2. Ask the user about expected test quality (if not already established for this session)
-3. Run `/red-phase` to write **one** failing test, run it, and confirm it fails.
+3. Run `/red-phase` to write **one** failing test, run it, and confirm it fails. 
 4. **STOP. Show the failing output. Ask: "Feedback before writing code?"**
 5. Do not write any production code until the user explicitly approves.
 
 ### Step 2 — GREEN
 1. Run `/green-phase` to write the **minimum** code to make the test pass, run all tests, and confirm green.
-2. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
-3. Save in the context that we are green and all tests passes.
+2. Save in the context that we are green and all tests passes, go to refactor phase.
 
 ### Step 3 — REFACTOR
 1. Look for code smells. Apply one refactor. Run all tests. Confirm still green.
    - Use comments to guide renaming, extraction, deduplication — then remove the comments.
    - If there is duplicated code, extract to a method with a parameter. Remove the comments.
    - If all tests passes mark the time when they passes in the .tdd-state.json file
-3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming.
+3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming. Just for backend projects.
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
 6. Save in the context that we are green and all tests passes.
@@ -59,9 +58,8 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 4 — COMMIT
 1. Run `/commit` skill — follow every step in the pre-commit checklist, you can skip tests if the context says we are green.
 2. Commit with a message that explains the **intention**, not the changes.
-3. Update `.tdd-state.json` with the current behavior marked as `DONE` and set `commit_compaction_status` to `pending`.
-4. **STOP. Ask: "Shall we move to the next test?"**
-5. Do not write the next test until the user explicitly approves.
+3. Update `.tdd-state.json` with the current behavior marked as `DONE`.
+4. Go to step PLAN again to follow the next test to implement. Because this is not the end of the ticket, it is the end when there are no more behaviours to add.
 
 
 ### Violations — stop and flag immediately
@@ -91,12 +89,11 @@ Allowed transitions:
 
 PLAN -> RED: user approves the Test List
 RED -> GREEN: user approves the failing test
-GREEN -> REFACTOR: user approves the passing implementation
+GREEN -> REFACTOR: **do it automatically, dont ask the user**.
 REFACTOR -> COMMIT: user approves the refactor
-COMMIT -> RED: user approves moving to the next behavior
+COMMIT -> PLAN: **do it automatically, dont ask the use**
 
 Never skip a transition, combine phases, or start another test before COMMIT.
-After each phase, stop and request the required approval.
 
 Before every response, update both internal state and `.tdd-state.json`:
 - Phase
@@ -110,7 +107,7 @@ Before every response, update both internal state and `.tdd-state.json`:
 By default, execute single-step reasoning in the main agent context.
 
 However, **you MUST delegate to a dedicated subagent** if you use a skill that says to be executed in a subagent or if there is an explicit rule to do it in the main AGENTS.md.
-Subagents must operate with clean, minimal context and return only the required output or failure diagnostics to the main agent.
+Subagents must operate with clean, minimal context and return only the required output or failure diagnostics to the main agent (no stopping step). Main agent can continue with the flow.
 
 ---
 
@@ -133,7 +130,7 @@ Subagents must operate with clean, minimal context and return only the required 
 | Migrage controllers from one bff to another, this is allowed to not do tdd | `/migrate-controller-stack ` |
 
 
-Full content lives in `docs/skills/`.
+Full content lives in `docs/skills/`.     
 
 
 ## Semantic Code Search (qdrant-rag), just in case qdrant-rag is configured as a mcp
@@ -142,7 +139,7 @@ The workspace is indexed in Qdrant for semantic search, directories under bah, n
 
 **Rules:**
 - Always use the `qdrant-rag` MCP tool for code search when available — prefer it over `grep` for conceptual/semantic queries.
-- **At the start of every working session**, run `reindex_changes` on the collection for the sub-project you are about to work on. This is fast and ensures the index reflects the latest code.
+- **At the start of every working session**, run `reindex_changes` on the collection for the sub-project you are about to work on, indentify first the subfolder to upgrade, not the base one. This is fast and ensures the index reflects the latest code.
 - **Never** index from the repo root — the root `.gitignore` uses `*` and blocks everything. Always index sub-projects individually.
 - Only run a full `index_codebase` (with `forceReindex: true`) when a sub-project has never been indexed or its collection has been deleted. For all other cases, use `reindex_changes`.
 - Ignore patterns must match `.ragignore` (see root `.ragignore`). Pass them via `ignorePatterns` on every `index_codebase` call.

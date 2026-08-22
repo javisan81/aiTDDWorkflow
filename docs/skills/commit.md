@@ -2,7 +2,7 @@
 name: commit
 description: >
   Use every time a commit is about to be made. Covers commit format, mandatory ticket scope,
-  when to commit separately, pre-commit checks, and the co-author trailer.
+  when to commit separately, pre-commit checks.
 recommended_model: gpt-5-mini
 ---
 

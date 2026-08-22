@@ -18,7 +18,7 @@ Use this skill at the start of a new feature or task, and at the beginning of ea
 ## 1. Initial Plan (Task Start)
 
 When starting a task:
-1. **Analyze Requirements:** Identify the boundaries, happy path, edge cases, and error conditions. 
+1. **Analyze Requirements:** Identify the boundaries, happy path, edge cases, and error conditions. If you have a jira ticket access to it.
    Identify the files to minimize the context size using a local rag if configured as mcp or you have access to it. 
 2. **Draft Test List:** Write a bulleted list of high-level behaviors ordered by complexity (simplest first).
 3. **Format:** Use descriptive, domain-focused titles (e.g., `* Should reject order when inventory is zero`).
@@ -27,15 +27,16 @@ When starting a task:
 
 ---
 
-## 2. Dynamic Update (Start of each RED phase)
+## 2. Dynamic Update (When coming from a previous TDD cycle)
 
 Before starting the next test cycle:
 1. **Review:** Check the current Test List against what was learned in the previous GREEN/REFACTOR cycle and our current implementation and list of tests.
 2. **Adapt:** 
    - Mark completed behaviors as done (`[x]`).
    - Add newly discovered scenarios or edge cases.
-   - Strike through or remove obsolete scenarios (YAGNI).
+   - Strike through or remove obsolete scenarios from the test lists planned based on the previous review step done (YAGNI).
 3. **Select:** Explicitly state which behavior is being tested next.
+4. **Validation:** Present the list to the user and wait for explicit approval before moving to Step 1 (RED).
 
 ---
 
@@ -50,6 +51,9 @@ Always output the plan in this format:
 
 **Next behavior to test:** `[Insert selected scenario]`
 **Ask:** "Does this list and the next target look good, or should we adjust?"
+
+Pass to the main agent the list of current files that are probably affected by the behaviours planned.
+
 # Subagent execution
 
 Run this planning skill in a dedicated subagent. This is mandatory, including
