@@ -43,8 +43,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 ### Step 2 — GREEN
 1. Run `/green-phase` to write the **minimum** code to make the test pass, run all tests, and confirm green.
 2. **STOP. Show the green output. Ask: "Feedback before refactoring?"**
-3. Do not refactor until the user explicitly approves.
-4. Save in the context that we are green and all tests passes.
+3. Save in the context that we are green and all tests passes.
 
 ### Step 3 — REFACTOR
 1. Look for code smells. Apply one refactor. Run all tests. Confirm still green.

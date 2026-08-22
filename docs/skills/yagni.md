@@ -11,6 +11,12 @@ description: >
 Run this checklist **twice** in every TDD cycle.
 
 ---
+## Planning phase
+
+Check that the current list of tests, each one of them will produce a production code change in the orden defined.
+If the list of tests to pass in the plan are already covered by old tests those tests are not required, so read the current tests to understand that 
+and discard steps. 
+Maximize the work not done.
 
 ## RED phase — on the test you just wrote
 
