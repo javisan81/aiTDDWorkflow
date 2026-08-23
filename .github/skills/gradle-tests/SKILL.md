@@ -1,1 +1,0 @@
-../../../docs/skills/gradle-tests.md
