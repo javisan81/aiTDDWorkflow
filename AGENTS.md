@@ -45,14 +45,14 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 2. Save in the context that we are green and all tests passes, go to refactor phase.
 
 ### Step 3 — REFACTOR
-1. Look for code smells. Apply one refactor. Run all tests. Confirm still green.
+1. Look for code smells. Apply one refactor. Run all tests to confirm we are green, but skip this run if we come from green-phase and all tests passes (check the .tdd-state.json file).
    - Use comments to guide renaming, extraction, deduplication — then remove the comments.
    - If there is duplicated code, extract to a method with a parameter. Remove the comments.
-   - If all tests passes mark the time when they passes in the .tdd-state.json file
+   - If all tests passes mark the time when they passes in the .tdd-state.json file to make the commit step to skip the execution of all tests.
 3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming. Just for backend projects.
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
-6. Save in the context that we are green and all tests passes.
+6. Save in the context that we are green and all tests passes and the time they passes.
 
 
 ### Step 4 — COMMIT
@@ -101,6 +101,98 @@ Before every response, update both internal state and `.tdd-state.json`:
 - Test List status
 - User approval status
 - Commit compaction status (`pending`, `completed`, or `user_action_required`)
+
+### Required `.tdd-state.json` contract
+
+The root `.tdd-state.json` is the shared state contract between the main agent,
+TDD skills, and delegated agents. It must be updated before and after every
+phase transition. Use this structure:
+
+```json
+{
+  "task": {
+    "ticket": "DWNINVS-304",
+    "project": "project-directory",
+    "started_at": "2026-01-01T00:00:00Z"
+  },
+  "phase": "PLAN",
+  "previous_phase": null,
+  "previous_behavior": null,
+  "last_transition_reason": "Task started",
+  "cycle": 1,
+  "current_behavior": "One behavior from the test list",
+  "next_allowed_action": "Await user approval of the behavior list",
+  "test_list": [
+    {
+      "behavior": "A domain-level behavior",
+      "status": "pending",
+      "commit": null
+    }
+  ],
+  "approvals": {
+    "plan": "pending",
+    "red_test": "pending",
+    "refactor": "pending",
+    "commit": "pending"
+  },
+  "validation": {
+    "tests_status": "not_run",
+    "tests_command": null,
+    "tests_completed_at": null,
+    "type_check_status": "not_run",
+    "format_status": "not_run"
+  },
+  "changes": {
+    "files": [],
+    "production_files": [],
+    "test_files": []
+  },
+  "commit": {
+    "status": "pending",
+    "hash": null,
+    "message": null
+  },
+  "blockers": [],
+  "last_updated_at": "2026-01-01T00:00:00Z"
+}
+```
+
+Field values must follow these rules:
+- `phase` is uppercase: `PLAN`, `RED`, `GREEN`, `REFACTOR`, or `COMMIT`.
+- `previous_phase` records the phase immediately before `phase`; it is `null`
+  only when the task starts.
+- `previous_behavior` records the behavior active in `previous_phase`, or
+  `null` when there is no previous phase.
+- `last_transition_reason` briefly records why the phase changed, such as
+  `Plan approved`, `Failing test approved`, or `Commit completed`.
+- `current_behavior` contains exactly one behavior from `test_list`.
+- `next_allowed_action` describes the only permitted next action.
+- `approvals` records the user decision for each transition; never infer approval
+  from a general message when the phase requires explicit approval.
+- `validation.tests_status` is `not_run`, `running`, `green`, or `red`.
+- `validation.type_check_status` and `validation.format_status` are
+  `not_run`, `green`, or `red`.
+- A behavior is marked `done` only after its GREEN and REFACTOR validation
+  succeeds. Its commit hash is recorded after COMMIT.
+- `commit_compaction_status` is `pending`, `completed`, or
+  `user_action_required`.
+
+### Validation reuse gate
+
+Before running commit validation, read `.tdd-state.json`:
+- If `phase` is `COMMIT`, `previous_phase` is `REFACTOR`, and
+  `validation.tests_status` is `green` with a non-null
+  `validation.tests_completed_at`, do **not** run the test suite again.
+- In that case, run only the required formatting and type-check commands, unless
+  code changed after the recorded validation or the user explicitly requests a
+  fresh test run.
+- Delegated commit-checklist agents must receive and obey this same gate. The
+  main agent must state whether tests are `SKIP` or `RUN` before delegating.
+
+Every phase transition must update `previous_phase`, `previous_behavior`, and
+`last_transition_reason` atomically with `phase`, `current_behavior`, and
+`next_allowed_action`. Skills must use these fields instead of inferring the
+origin phase from chat history.
 
 ## Sub-agents & Phase Isolation
 
