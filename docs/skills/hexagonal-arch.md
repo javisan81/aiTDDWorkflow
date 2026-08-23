@@ -61,7 +61,7 @@ adapter.output.*     ←  domain ports
 Domain classes must never import from `adapter.*`, `org.springframework.*`, or `jakarta.persistence.*`.
 
 ## check anemic use cases
-Run `/anemic-usecase` skill to check if we have anemic usecase and then remove the usecase if it not required.
+Run `/anemic-use-case-check` skill to check if we have an anemic use case and then remove the use case if it is not required.
 
 
 ## Subagent execution

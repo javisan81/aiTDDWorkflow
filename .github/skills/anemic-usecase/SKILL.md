@@ -1,1 +1,0 @@
-../../../docs/skills/anemic-usecase.md

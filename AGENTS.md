@@ -61,6 +61,21 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 3. Update `.tdd-state.json` with the current behavior marked as `DONE`.
 4. Go to step PLAN again to follow the next test to implement. Because this is not the end of the ticket, it is the end when there are no more behaviours to add.
 
+### Step 5 — mutation testing (end of the feature)
+1. This step only happens when the list of behaviors is completed.
+2. Execute mutation testing only when the project provides a reliable incremental changed-code
+   mechanism. For PIT projects, first verify that the Git changes plugin is configured and that
+   the `git-changes` feature is available, then run for example:
+   `./gradlew pitest -Dfeatures="+git-changes(target[origin/main])"`.
+3. If incremental mutation testing is unavailable or unreliable, skip Step 5 and record the
+   reason in `.tdd-state.json`. Do not fall back to the full mutation-testing suite.
+4. Give a list of mutants and the tests that could kill the mutants.
+5. **STOP. Ask: "Which mutants should we kill and how?"**
+6. Create the tests to kill the mutants.
+7. **STOP. Ask: "Feedback? Shall we commit?"**
+8. Do not commit until the user explicitly approves.
+9. The ticket finishes, we can remove `.tdd-state.json`.
+
 
 ### Violations — stop and flag immediately
 - Writing production code without a failing test → YAGNI violation
@@ -75,7 +90,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 
 At all times, maintain and state these values internally, and mirror them in `.tdd-state.json` at the root:
 
-- `PHASE`: PLAN | RED | GREEN | REFACTOR | COMMIT
+- `PHASE`: PLAN | RED | GREEN | REFACTOR | COMMIT | FINISHED (mutation testing)
 - `CURRENT_BEHAVIOR`: exactly one behavior from the Test List
 - `NEXT_ALLOWED_ACTION`: the only action permitted by the current phase
 
@@ -158,7 +173,7 @@ phase transition. Use this structure:
 ```
 
 Field values must follow these rules:
-- `phase` is uppercase: `PLAN`, `RED`, `GREEN`, `REFACTOR`, or `COMMIT`.
+- `phase` is uppercase: `PLAN`, `RED`, `GREEN`, `REFACTOR`, `COMMIT`, or `FINISHED`.
 - `previous_phase` records the phase immediately before `phase`; it is `null`
   only when the task starts.
 - `previous_behavior` records the behavior active in `previous_phase`, or
@@ -216,9 +231,9 @@ Subagents must operate with clean, minimal context and return only the required 
 | YAGNI check on test (RED) or production code (GREEN) | `/yagni` |
 | Execute one RED cycle always in the main agent, no subagents | `/red-phase` |
 | Execute one GREEN cycle always in the main agent, no subagents | `/green-phase` |
-| Detect and remove proxy use cases in REFACTOR | `/anemic-usecase` |
+| Detect and remove proxy use cases in REFACTOR | `/anemic-usecase-check` |
 | Committing (format, ticket, boot check, trailer) | `/commit` |
-| Plan next tests to implement | `/behavior-plannings` |
+| Plan next tests to implement | `/behavior-planning` |
 | Migrage controllers from one bff to another, this is allowed to not do tdd | `/migrate-controller-stack ` |
 
 
