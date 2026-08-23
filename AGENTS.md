@@ -63,12 +63,13 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 
 ### Step 5 — mutation testing (end of the feature)
 1. This step only happens when the list of behaviors is completed.
-2. Execute mutation testing only when the project provides a reliable incremental changed-code
-   mechanism. For PIT projects, first verify that the Git changes plugin is configured and that
-   the `git-changes` feature is available, then run for example:
+2. Execute mutation testing incrementally when the project provides a reliable mechanism:
+   use PIT history input/output with CI cache restoration where configured, or use the
+   `git-changes` feature only when that plugin is explicitly configured. For history-based
+   PIT projects, run `./gradlew pitest`; for Git changes projects, run for example:
    `./gradlew pitest -Dfeatures="+git-changes(target[origin/main])"`.
-3. If incremental mutation testing is unavailable or unreliable, skip Step 5 and record the
-   reason in `.tdd-state.json`. Do not fall back to the full mutation-testing suite.
+3. If no reliable incremental mechanism is available, skip Step 5 and record the reason in
+   `.tdd-state.json`. Do not fall back to the full mutation-testing suite.
 4. Give a list of mutants and the tests that could kill the mutants.
 5. **STOP. Ask: "Which mutants should we kill and how?"**
 6. Create the tests to kill the mutants.
@@ -203,6 +204,14 @@ Before running commit validation, read `.tdd-state.json`:
   fresh test run.
 - Delegated commit-checklist agents must receive and obey this same gate. The
   main agent must state whether tests are `SKIP` or `RUN` before delegating.
+
+### Incremental PIT configuration
+
+For services using PIT history-based incremental mutation testing, configure
+`historyInputLocation` and `historyOutputLocation` to
+`build/reports/pitest-history.txt`. CI must restore this file from a
+branch-aware cache before running `pitest` and save the updated file afterward.
+If no history is restored, PIT runs in full mode.
 
 Every phase transition must update `previous_phase`, `previous_behavior`, and
 `last_transition_reason` atomically with `phase`, `current_behavior`, and
