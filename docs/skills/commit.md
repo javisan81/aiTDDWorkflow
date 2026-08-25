@@ -31,6 +31,7 @@ type(TICKET-123): short description
 - **Ticket number is mandatory as the scope.** Ask the user before committing if unknown.
 - The message explains the **intention** (why), not the changes (what).
 - Commit with a message that explains the **intention**, not the changes.
+- Do not add `Co-authored-by` trailers to commit messages.
 
 ## Pre-commit checklist
 Before running commit validation, read .tdd-state.js. If PHASE is COMMIT  and the previous phase was REFACTOR, and the refactor already recorded green tests, do not run tests again. Run only formatting and type-checking where required.
