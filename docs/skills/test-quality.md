@@ -9,6 +9,8 @@ description: >
 
 # Test Quality Rules
 
+Consider the next sections as steps to pass, to validate the current quality of the test in place, if any of this step does not pass then try to fix it:
+
 ## Signal vs noise — the `ANY_` prefix
 
 Every detail in a test is either **relevant** (reader needs it) or **irrelevant** (only needed
@@ -50,6 +52,8 @@ val SearchResult.Companion.ANY_CHEAPER get() = ANY_RESULT.copy(price = 50)
 
 ### Kotlin example files
 
+Check the current examples in the project you are working on to understand where to put new values or update them.
+
 Reusable Kotlin fixtures belong in a dedicated `*Example.kt` file under
 `src/test`, mirroring the production package of the type they describe. Tests
 should import examples instead of constructing full domain objects or payloads
@@ -83,6 +87,8 @@ JSON payloads or repeated flight keys in individual tests.
 If a type has no companion, do not add production-only structure merely to
 support a fixture. Use the nearest existing project example convention or a
 dedicated fixture factory, and keep that fixture in test sources.
+
+If in the test file you have constants and objects created once and again try to move them to an example.
 
 ### Kotlin example files
 
@@ -263,5 +269,10 @@ So this is an example of something wrong:
 ```
 The above example should be the string representing the thing.
 ---
+
+## Compare full objects
+We prefer comparing, the expected result vs the current executed result, full objects when possible, not the individual attributes of the class we are interested to check the results.
+If you decide not comparing full objects explain your decision to the customer.
+
 ## YAGNI
 Run `/yagni` checklist on the test before showing it to the user. If yagni is not passing explains it to the customer.
