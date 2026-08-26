@@ -48,6 +48,94 @@ val SearchResult.Companion.ANY_CHEAPER get() =
 val SearchResult.Companion.ANY_CHEAPER get() = ANY_RESULT.copy(price = 50)
 ```
 
+### Kotlin example files
+
+Reusable Kotlin fixtures belong in a dedicated `*Example.kt` file under
+`src/test`, mirroring the production package of the type they describe. Tests
+should import examples instead of constructing full domain objects or payloads
+inline.
+
+Use companion-object extensions for domain instances, following the project
+convention:
+
+```kotlin
+// src/test/kotlin/com/bah/flights/domain/model/FlightOfferExample.kt
+val FlightOffer.Companion.example: FlightOffer
+    get() = realFlightOffer(
+        availabilityId = ANY_AVAILABILITY_ID,
+        offerId = ANY_OFFER_ID,
+        payload = ANY_VALID_FLIGHT_OFFER_PAYLOAD,
+    )
+```
+
+The example must be a real domain object or real adapter-backed domain
+implementation, never a mock. Put incidental identifiers, keys, payload
+fragments, and other reusable values in the example file as `ANY_` constants.
+Keep only behavior-defining relationships visible in the test, such as using
+`FIRST_ORIGINAL_CART_ID` as the first element of `originalCartIds`.
+
+For variants, prefer deriving from a base example with `copy` when the type
+supports it. For interfaces or parsed objects that cannot be copied, expose
+named companion examples such as `exampleWithoutOfferIdentifier` and build
+them through a shared factory in the same example file. Do not duplicate large
+JSON payloads or repeated flight keys in individual tests.
+
+If a type has no companion, do not add production-only structure merely to
+support a fixture. Use the nearest existing project example convention or a
+dedicated fixture factory, and keep that fixture in test sources.
+
+### Kotlin example files
+
+Reusable Kotlin fixtures belong in a dedicated `*Example.kt` file under
+`src/test`, mirroring the production package of the type they describe. Tests
+should import examples instead of constructing full domain objects or payloads
+inline.
+
+Use companion-object extensions for domain instances, following the project
+convention:
+
+```kotlin
+// src/test/kotlin/com/bah/flights/domain/model/FlightOfferExample.kt
+val FlightOffer.Companion.example: FlightOffer
+    get() = realFlightOffer(
+        availabilityId = ANY_AVAILABILITY_ID,
+        offerId = ANY_OFFER_ID,
+        payload = ANY_VALID_FLIGHT_OFFER_PAYLOAD,
+    )
+```
+
+The example must be a real domain object or real adapter-backed domain
+implementation, never a mock. Put incidental identifiers, keys, payload
+fragments, and other reusable values in the example file as `ANY_` constants.
+Keep only behavior-defining relationships visible in the test, such as using
+`FIRST_ORIGINAL_CART_ID` as the first element of `originalCartIds`.
+
+For variants, prefer deriving from a base example with `copy` when the type
+supports it. For interfaces or parsed objects that cannot be copied, expose
+named companion examples such as `exampleWithoutOfferIdentifier` and build
+them through a shared factory in the same example file. Do not duplicate large
+JSON payloads or repeated flight keys in individual tests.
+
+If a type has no companion, do not add production-only structure merely to
+support a fixture. Use the nearest existing project example convention or a
+dedicated fixture factory, and keep that fixture in test sources.
+
+### Domain instances must be real
+
+Never use `mockk<DomainType>()` for domain objects returned by a mocked port or passed to the
+system under test. Use an existing example, fake, or real domain instance instead. Mock only the
+port boundary and configure the real domain object through its constructor or fixture parameters.
+This keeps the test focused on behavior and prevents domain methods such as `cabinClass()` from
+being hidden behind mock setup.
+
+Before approving a test, inspect every value repeated across setup, mock expectations, method calls,
+and assertions. Reuse existing `ANY_` fixtures from the relevant example file when available.
+Otherwise extract repeated identifiers and other incidental scalars into clearly named constants.
+In particular, do not repeat cart IDs, availability IDs, offer IDs, or other domain identifiers as
+magic strings in `every { ... }` blocks or production calls. Keep the behavior-defining relationship
+visible in the test, for example `FIRST_ORIGINAL_CART_ID` as the first item in
+`originalCartIds`, while hiding only the literal value behind the fixture.
+
 ---
 
 ## Fixtures: `.example.ts` files (TypeScript/React)
@@ -177,4 +265,3 @@ The above example should be the string representing the thing.
 ---
 ## YAGNI
 Run `/yagni` checklist on the test before showing it to the user. If yagni is not passing explains it to the customer.
-
