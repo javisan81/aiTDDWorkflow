@@ -24,6 +24,7 @@ Write **just one test** — never more.
 
 If the user talks about doing a refactor and we are green (all tests passes) we can go to refactor stage directly and continue the cycle in that step.
 If the user explicitely says not using TDD then you can skip these steps, and follow their approach.
+If the user explicitely says not using TDD but is because want to implement a Refactor and we are green, follow the steps in refactor stage.
 
 Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-in` for layer progression, TPP, and test explosion detection.
 
