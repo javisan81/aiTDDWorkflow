@@ -50,6 +50,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
    - Use comments to guide renaming, extraction, deduplication — then remove the comments.
    - If there is duplicated code, extract to a method with a parameter. Remove the comments.
    - If all tests passes mark the time when they passes in the .tdd-state.json file to make the commit step to skip the execution of all tests.
+   - In case the refactor is for a test, then apply `/test-quality` skill
 3. Run `/hexagonal-arch` checklist: verify folder structure, no framework imports in domain, port naming. Just for backend projects.
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
