@@ -9,7 +9,7 @@ description: >
 
 # Test Quality Rules
 
-Consider the next sections as steps to pass, to validate the current quality of the test in place, if any of this step does not pass then try to fix it:
+Consider the next sections as steps to pass, to validate the current quality of the test in place, if any of this step does not pass then try to refactor the code to make it pass:
 
 ## Signal vs noise — the `ANY_` prefix
 
@@ -273,6 +273,9 @@ The above example should be the string representing the thing.
 ## Compare full objects
 We prefer comparing, the expected result vs the current executed result, full objects when possible, not the individual attributes of the class we are interested to check the results.
 If you decide not comparing full objects explain your decision to the customer.
+
+## If you have comments in your tests
+Use comments in your tests to improve names or extract methods and when the comments are irrelevant remove them.
 
 ## YAGNI
 Run `/yagni` checklist on the test before showing it to the user. If yagni is not passing explains it to the customer.

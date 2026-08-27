@@ -62,7 +62,7 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 4. Go to step PLAN again to follow the next test to implement. Because this is not the end of the ticket, it is the end when there are no more behaviours to add.
 
 ### Step 5 — mutation testing (end of the feature)
-1. This step only happens when the list of behaviors is completed.
+1. This step only happens when the list of behaviors is completed. Check in .tdd-state.json the projects changed by the feature and one by one run this list.
 2. Execute mutation testing incrementally when the project provides a reliable mechanism:
    use PIT history input/output with CI cache restoration where configured, or use the
    `git-changes` feature only when that plugin is explicitly configured. For history-based
@@ -169,7 +169,8 @@ phase transition. Use this structure:
     "message": null
   },
   "blockers": [],
-  "last_updated_at": "2026-01-01T00:00:00Z"
+  "last_updated_at": "2026-01-01T00:00:00Z",
+  "projectsModified": ["holidays-searchBrowse-flight-bff, "searchBrowseBff"]
 }
 ```
 
