@@ -279,3 +279,7 @@ Use comments in your tests to improve names or extract methods and when the comm
 
 ## YAGNI
 Run `/yagni` checklist on the test before showing it to the user. If yagni is not passing explains it to the customer.
+
+## Refactor
+Run `/refactor` checklist on the test before showing it to the user. Try to fix smells found in the file where your test lives.
+

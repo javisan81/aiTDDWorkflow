@@ -10,6 +10,7 @@ recommended_model: gpt-5-mini
 
 The base folder is not the place to launch commits, you always need to commit inside the specific folder of the specific project.
 For example if you are doing changes in holidays-searchBrowse-flight-bff, you need to run your commands inside the folder "holidays-searchBrowse-flight-bff"
+All commands that you need for commit related to run tests, git are allowed
 
 ## When to commit
 

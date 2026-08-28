@@ -173,7 +173,12 @@ phase transition. Use this structure:
   },
   "blockers": [],
   "last_updated_at": "2026-01-01T00:00:00Z",
-  "projectsModified": ["holidays-searchBrowse-flight-bff, "searchBrowseBff"]
+  "projectsModified": ["holidays-searchBrowse-flight-bff, "searchBrowseBff"],
+  "decisions": [
+    "Use the existing FlightOfferRepository port",
+    "Do not introduce a second repository abstraction",
+    "Do not modify shared skills for this ticket"
+  ]
 }
 ```
 
@@ -196,6 +201,8 @@ Field values must follow these rules:
   succeeds. Its commit hash is recorded after COMMIT.
 - `commit_compaction_status` is `pending`, `completed`, or
   `user_action_required`.
+- `decisions` is an array of all the important decisions taken during the implementation of the ticket and we need to maintain
+- `projectsModified` is a list of the projects that we have changed during the feature implementation
 
 ### Validation reuse gate
 
