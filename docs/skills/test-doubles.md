@@ -105,3 +105,7 @@ When you change production code, **find all mocks of that interface and update t
 Trade-off: fakes are safer (you can write contract tests); mocks are faster (design APIs
 without implementing them). Use both consciously.
 
+## Mocking in a test
+If we are wrinting a test and you need to mock a method of an interface and that interface has an implementation
+write the method in the implementation to compile, but use a todo or a return null or anything that helps you to fail because of the good reason.
+Dont implement the code in that case.

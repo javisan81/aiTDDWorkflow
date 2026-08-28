@@ -9,7 +9,7 @@ description: >
 
 # Test Quality Rules
 
-Consider the next sections as steps to pass, to validate the current quality of the test in place, if any of this step does not pass then try to refactor the code to make it pass:
+Consider the next sections as steps to pass, like a checklist, to validate the current quality of the test in place, if any of this step does not pass then try to refactor the code to make it pass.
 
 ## Signal vs noise — the `ANY_` prefix
 
@@ -277,9 +277,31 @@ If you decide not comparing full objects explain your decision to the customer.
 ## If you have comments in your tests
 Use comments in your tests to improve names or extract methods and when the comments are irrelevant remove them.
 
+## Mandatory whole-file audit before reporting RED or GREEN
+
+Review the complete test file, not only the newly added test. Before reporting the test as
+quality-compliant:
+
+- Inspect the current production signature and return type used by the test. Do not assume that
+  the proposed API or an earlier design is still the API in the working tree.
+- Align the assertion with the actual return type. For `ByteArray`, compare contents with
+  `contentEquals`; do not use object identity equality.
+- Treat compiler errors independently. An unresolved production method can cause cascading
+  errors in the assertion, so do not conclude that the assertion is invalid until the method
+  signature is available.
+- Scan the whole file for duplicated fixtures, not just repeated values in the new test.
+- Inline locals that only alias an `ANY_` constant. Extract shared values such as availability
+  IDs, offer IDs, identifiers, and payload fragments into one `ANY_` fixture and reuse it.
+- Extract repeated collaborator construction into a helper or shared fixture when it does not
+  hide behavior.
+- Keep behavior-defining relationships visible in the test; hide only incidental values.
+- For adapter tests, verify that the chosen test double matches the boundary: use real
+  Testcontainers or WireMock for persistence and HTTP adapters, and do not introduce mocks
+  merely to make the test compile.
+
 ## YAGNI
 Run `/yagni` checklist on the test before showing it to the user. If yagni is not passing explains it to the customer.
 
 ## Refactor
-Run `/refactor` checklist on the test before showing it to the user. Try to fix smells found in the file where your test lives.
-
+Run `/refactor` checklist on the test before showing it to the user. Try to fix smells found in the file where your test lives, not just your new test the whole file.
+Elimina las variables que son innecesarias, si son copias de una constante ejecuta un refactor para inlinear.
