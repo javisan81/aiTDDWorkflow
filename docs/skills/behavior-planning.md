@@ -40,6 +40,11 @@ Before starting the next test cycle:
 
 ---
 
+## 3. Adding new tests to the list.
+1. The user can add new tests to the behavioral list at any moment, just update teh tdd-state.json with the new test to do and take it into account for the next exeuction.
+2. Dont interrupt the current cycle of TDD in this case, just run this in a subagent.
+
+
 ## Output Template
 
 Always output the plan in this format:

@@ -13,7 +13,7 @@ This skill performs only the RED action selected by `AGENTS.md`, **run it in the
 3. Run the smallest relevant existing test command, this means run the tests in the file you updated the red test.
 4. Confirm the test fails for the intended reason, run all tests in that file.
 5. run `/test-quality` to understand if the test is good enough. This step and previous one can be executed in parallel. If there are things that does not match, then fix them.
-6. show the diff of the current change in tests to the customer with git diff and the files changed
+6. show the diff of the current change in tests to the customer, in the cli console with git diff and the files changed
 
 ## Core mocking rule
 
@@ -25,4 +25,4 @@ and guidance on when to use fakes vs mocks.
 ---
 
 Do not write production code, additional tests, or refactors. Return only the
-test file, concise failure evidence, and any blocker.
+test file, concise failure evidence, any blocker and the diff to be shown.

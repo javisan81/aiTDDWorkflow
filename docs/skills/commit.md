@@ -10,7 +10,7 @@ recommended_model: gpt-5-mini
 
 The base folder is not the place to launch commits, you always need to commit inside the specific folder of the specific project.
 For example if you are doing changes in holidays-searchBrowse-flight-bff, you need to run your commands inside the folder "holidays-searchBrowse-flight-bff"
-All commands that you need for commit related to run tests, git are allowed
+All commands that you need for commit related to run tests, git are allowed, rtk, find , are allowed. Please use always the recommended model for this skill and any subagent
 
 ## When to commit
 
@@ -35,7 +35,7 @@ type(TICKET-123): short description
 - Do not add `Co-authored-by` trailers to commit messages.
 
 ## Pre-commit checklist
-Before running commit validation, read .tdd-state.js. If PHASE is COMMIT  and the previous phase was REFACTOR, and the refactor already recorded green tests, do not run tests again. Run only formatting and type-checking where required.
+Before running commit validation, read .tdd-state.js. If PHASE is COMMIT and the previous phase was REFACTOR, and the refactor already recorded green tests, do not run tests again. Run only formatting and type-checking where required.
 
 1. **Format code**
    - Backend: `./gradlew ktlintFormat`
@@ -45,8 +45,3 @@ Before running commit validation, read .tdd-state.js. If PHASE is COMMIT  and t
    - Backend: use gradlew
    - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`, in frontend dont run-in-band the tests
 
-## Subagent execution
-
-Run the commit checklist in a dedicated subagent. This is mandatory, including
-when the checklist appears small or straightforward. Return only the checklist
-result and blocking findings.
