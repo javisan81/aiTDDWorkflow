@@ -57,13 +57,14 @@ Use the `/behavior-planning` skill to maintain the Test List, and `/tdd-outside-
 4. **STOP. Ask: "Feedback? Shall we commit?"**
 5. Do not commit until the user explicitly approves.
 6. Save in the context that we are green and all tests passes and the time they passes.
+7. Review notes and remove those covered by this cycle, explain it to client.
 
 
 ### Step 4 — COMMIT
 1. Run `/commit` skill — follow every step in the pre-commit checklist, you can skip tests if the context says we are green.
 2. Commit with a message that explains the **intention**, not the changes.
-3. Update `.tdd-state.json` with the current behavior marked as `DONE`.
-4. Go to step PLAN again to follow the next test to implement. Because this is not the end of the ticket, it is the end when there are no more behaviours to add.
+3. Update `.tdd-state.json` with the current behavior marked as `DONE`, the whole feature is not done, jsut this behavior.
+4. **Go to step PLAN again to follow the next test to implement**. Because this is not the end of the ticket, it is the end when there are no more behaviours to add.
 
 ### Step 5 — mutation testing (end of the feature)
 1. This step only happens when the list of behaviors is completed. Check in .tdd-state.json the projects changed by the feature and one by one run this list.

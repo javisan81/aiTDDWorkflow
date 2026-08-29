@@ -35,6 +35,8 @@ Before starting the next test cycle:
    - Mark completed behaviors as done (`[x]`).
    - Add newly discovered scenarios or edge cases.
    - Strike through or remove obsolete scenarios from the test lists planned based on the previous review step done (YAGNI).
+   - Remove notes with /notes skill already covered
+   - Review the notes with /notes skill to take them into account to change the list of tests or plan refactors, ask the client which ones to take into account for this new cycle. 
 3. **Select:** Explicitly state which behavior is being tested next.
 4. **Validation:** Present the list to the user and wait for explicit approval before moving to Step 1 (RED).
 
