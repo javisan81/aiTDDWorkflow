@@ -9,6 +9,11 @@ definitions may extend it with project-specific details, but must not override
 or replace it.
 
 ---
+# Token Optimization Rules
+- Mode: ultra-dense output.
+- Do not include greetings, sign-offs, or conversational filler.
+- Provide raw code or shell commands directly without unnecessary explanations.
+
 
 ## Platform Map
 
