@@ -10,7 +10,7 @@ recommended_model: gpt-5-mini
 
 The base folder is not the place to launch commits, you always need to commit inside the specific folder of the specific project.
 For example if you are doing changes in holidays-searchBrowse-flight-bff, you need to run your commands inside the folder "holidays-searchBrowse-flight-bff"
-All commands that you need for commit related to run tests, git are allowed, rtk, find , are allowed. Please use always the recommended model for this skill and any subagent
+All commands needed for commits, tests, and git operations are allowed. Please always use the recommended model for this skill and any subagent.
 
 ## When to commit
 
@@ -44,4 +44,3 @@ Before running commit validation, read .tdd-state.js. If PHASE is COMMIT and the
    You can run just the affected tests in case the number of tests to execute is higher that 1700 and you are in a gradle project. And also you can skip this if the context says this was running previously.
    - Backend: use gradlew
    - Frontend: `TZ=UTC npm test` and for frontend also run `npm run type-check`, in frontend dont run-in-band the tests
-

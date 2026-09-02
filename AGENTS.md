@@ -274,5 +274,3 @@ The workspace is indexed in Qdrant for semantic search, directories under bah, n
 - Ignore patterns must match `.ragignore` (see root `.ragignore`). Pass them via `ignorePatterns` on every `index_codebase` call.
 
 Note:
-In case the current system use rtk you are allowed to access any file inside "$HOME/Library/Application Support/rtk/tee/" folder.
-Maintain in memory this route and the real route based on the value of $HOME, both are allowed. So you can access $HOME/Library/Application Support/rtk/tee/*
