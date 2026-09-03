@@ -129,8 +129,72 @@ fun `returns 404 when hotel is not found`() { ... }
 @Test
 fun `adds item to cart and returns updated total`() { ... }
 ```
+
+---
+
+## Assertion specificity and fixture independence
+
+- Expected values in assertions must use the most specific scalar fixtures available.
+- Do not build expected values from properties of the object used as the input fixture.
+- This keeps assertions independent from setup objects and ensures incorrect mappings are detected.
+- Extract named constants for every value whose exact persistence or serialization matters.
+- Create dedicated examples when a test needs multiple distinct values.
+
+Bad:
+
+```kotlin
+repository.save(ANY_CART_ADDON_PAYLOAD_EXAMPLE)
+
+result shouldBe CartAddonPayloadDTO(
+    productType = ANY_CART_ADDON_PAYLOAD_EXAMPLE.productType,
+    productKey = ANY_CART_ADDON_PAYLOAD_EXAMPLE.productKey,
+    payload = ANY_CART_ADDON_PAYLOAD_EXAMPLE.payload,
+)
+```
+
+Good:
+
+```kotlin
+repository.save(ANY_CART_ADDON_PAYLOAD_EXAMPLE)
+
+result shouldBe CartAddonPayloadDTO(
+    productType = ANY_CART_ADDON_PRODUCT_TYPE,
+    productKey = ANY_CART_ADDON_PRODUCT_KEY,
+    payload = ANY_CART_ADDON_PAYLOAD,
+)
+```
+
+For test-specific variants, define independent constants and examples:
+
+```kotlin
+const val SECOND_CART_ADDON_PRODUCT_KEY = "TRS~2"
+const val SECOND_CART_ADDON_PAYLOAD = "opaque-second-transfer-payload"
+
+val SECOND_CART_ADDON_PAYLOAD_EXAMPLE =
+    CartAddonPayload(
+        productType = ANY_CART_ADDON_PRODUCT_TYPE,
+        productKey = SECOND_CART_ADDON_PRODUCT_KEY,
+        payload = SECOND_CART_ADDON_PAYLOAD,
+    )
+```
+
+Assertions must use the constants directly:
+
+```kotlin
+CartAddonPayloadDTO(
+    productType = ANY_CART_ADDON_PRODUCT_TYPE,
+    productKey = SECOND_CART_ADDON_PRODUCT_KEY,
+    payload = SECOND_CART_ADDON_PAYLOAD,
+)
+```
+
+### Review checklist
+
+Before completing a backend test change:
+
+- Does any expected value contain `someExample.someProperty`?
+- Does any expected value contain `someTemporaryPayload.someProperty`?
+- Are persisted and serialized values represented by named constants?
+- Would the assertion still catch an incorrect mapping if the input fixture changed?
 # Subagent execution
 
-Run this skill in a dedicated subagent. This is mandatory, including when the
-test work appears small or straightforward. Keep the response focused on the
-test outcome and relevant diagnostics.

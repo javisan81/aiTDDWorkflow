@@ -22,6 +22,7 @@ This skill performs only the RED action selected by `AGENTS.md`, **run it in the
 Use the `/test-doubles` skill for the full boundary reference, the 5 double types,
 and guidance on when to use fakes vs mocks.
 
+Use `/backend-tests` or `/frontend-tests` skills to have the guidelines about what tests to write.
 ---
 
 Do not write production code, additional tests, or refactors. Return only the
