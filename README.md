@@ -1,99 +1,129 @@
-## 🚀 Main Features
+# AI Workflow
 
-* **Assisted Test Generation:** From a natural language description, the AI generates the initial test cases.
-* **Automated Red-Green-Refactor Cycle:**
-* 🔴 **Red:** Creation of robust tests that initially fail.
-* 🟢 **Green:** Suggestion of the minimum viable code to pass the tests.
-* 🔵 **Refactor:** Intelligent analysis to improve code readability, maintainability, and performance.
+An opinionated, repository-aware workflow for using GitHub Copilot with
+outside-in Test-Driven Development (TDD), evolutionary hexagonal architecture,
+and project-specific agent guidance.
 
+The repository is a workspace containing multiple application projects,
+supporting tools, architecture documentation, and reusable Copilot skills.
 
-* **Language Agnostic:** Patterns and workflows adaptable to multiple programming languages (Python, JavaScript/TypeScript, Java, Go, etc.).
-* **Easy Integration:** Designed to be incorporated into your current repositories and pipelines.
+## What this workflow provides
 
-## 📋 Prerequisites
+- **Outside-in TDD:** drive behavior from the entry point toward use cases and
+  infrastructure.
+- **Strict RED/GREEN/REFACTOR discipline:** write one test at a time, keep
+  production code demanded by a failing test, and review refactors separately.
+- **Architecture guidance:** evolve ports and domain services only when tests
+  or adapters require them.
+- **Test-quality rules:** use strict output-contract assertions, meaningful
+  fixtures, and appropriate test doubles.
+- **Project-aware assistance:** select the nearest `AGENTS.md` and local
+  instructions before working in a project.
+- **Optional semantic code search:** use Qdrant to navigate large codebases
+  conceptually instead of relying only on literal search.
 
-To get the most out of this workflow, it is recommended to have:
+## Getting started
 
-* Basic knowledge of agile methodologies and TDD.
-* An execution environment compatible with your usual testing tools (e.g., Jest, PyTest, JUnit).
-* (Optional) Access to Large Language Model (LLM) APIs such as OpenAI, Claude, or a local model (e.g., Llama 3) for automation.
+### Clone the workspace
 
-## 🛠️ Installation and Setup
-
-1. **Clone the repository to your local machine:**
 ```bash
-git clone https://github.com/javisan81/aiTDDWorkflow.git
-cd aiTDDWorkflow
-
+git clone https://github.com/javier-lopez-fernandez_iagl/aiWorkflow.git
+cd aiWorkflow
 ```
 
+### Read the agent guidance
 
-2. **Review the internal documentation:**
-Explore the `/docs` folder (if available) or the base scripts to adapt the workflow to your environment.
-3. **Environment Setup:**
-If you use automated scripts from this repository, make sure to install the necessary dependencies and initialize your environment variables (e.g., `.env` with your API keys).
+Start with the repository-root [`AGENTS.md`](AGENTS.md). It is the source of
+truth for the workflow, TDD state, architecture rules, and available skills.
 
-### Option B: Link an existing directory containing your projects
+Before changing a project:
 
-If you already have a local directory containing your projects and want to link it to the remote GitHub repository:
+1. Identify the project directory.
+2. Read its nearest `AGENTS.md`, if it has one.
+3. Read any project-local Copilot instructions.
+4. Run the commands documented by that project.
 
-    Open your terminal in the root of your existing directory:
-    Bash
-```bash
-    cd /path/to/your/projects-directory
+The root [`docs/project-map.md`](docs/project-map.md) is an inventory of
+projects; project-local instructions remain authoritative.
+
+## TDD workflow
+
+The workflow is organized into explicit phases:
+
+1. **PLAN:** define and order the behavior list.
+2. **RED:** write exactly one failing test and show the failure.
+3. **GREEN:** implement the minimum code needed to pass and run the affected
+   tests.
+4. **REFACTOR:** make one focused structural improvement without changing
+   behavior.
+5. **COMMIT:** commit the approved behavior using the repository commit rules.
+6. **FINISHED:** run incremental mutation testing when all planned behaviors
+   are complete.
+
+The shared [`.tdd-state.json`](.tdd-state.json) file records the active phase,
+behavior, approvals, validation, and commit state. Use the `tdd-state` skill
+instead of inferring state from conversation history.
+
+### Layer progression
+
+```text
+Entry point (HTTP / CLI / queue handler)
+  -> Use case (application service)
+  -> Persistence or external-service adapter
 ```
-    Initialize Git in that directory (if it is not already a local repository):
-    Bash
-```bash
-    git init
-```
-    Link your directory to the remote repository:
-    Bash
-```bash
-    git remote add origin https://github.com/javisan81/aiTDDWorkflow.git or git@github.com:javier-lopez-fernandez_iagl/aiWorkflow.git
-```
-    Fetch and check out the remote branch (to pull documentation and base configurations):
-    Bash
-```bash
-    git fetch origin
-    git checkout -b main origin/main
-```
-    (Optional) Stage, commit, and push your existing local files to the repository:
-    Bash
 
-    git add .
-    git commit -m "feat: link existing local directory"
-    git push -u origin main
-```
+For frontend work, begin with the page or feature integration test, then move
+to component and API-hook tests only when the outer test demands it.
 
-## 🔍 Optional: Semantic Code Search (qdrant-rag)
+## Skills catalog
 
-This workspace supports **semantic code search** via a local Qdrant vector database, integrated with GitHub Copilot CLI through the `qdrant-rag` MCP server. This is **entirely optional** but significantly improves code navigation in large codebases.
+Skills are available as project documentation in [`docs/skills/`](docs/skills/)
+and as Copilot skill entries in [`.github/skills/`](.github/skills/). Invoke a
+skill by its name, for example `/behavior-planning`.
 
-### Stack
-
-| Component | Purpose |
+| Skill | Purpose |
 |---|---|
-| [Docker](https://www.docker.com/) | Runs the Qdrant container |
-| [Qdrant](https://qdrant.tech/) | Local vector database that stores code embeddings |
-| [qdrant-rag MCP server](https://github.com/feuerdev/qdrant-rag-mcp) | MCP server that indexes code and exposes semantic search to Copilot |
+| [`behavior-planning`](docs/skills/behavior-planning.md) | Create and maintain the ordered behavior/test list. |
+| [`tdd-outside-in`](docs/skills/tdd-outside-in.md) | Choose the outermost suitable test layer and avoid test explosion. |
+| [`tdd-state`](docs/skills/tdd-state.md) | Maintain and validate `.tdd-state.json` across phase transitions. |
+| [`red-phase`](docs/skills/red-phase.md) | Execute one RED cycle with exactly one failing test. |
+| [`green-phase`](docs/skills/green-phase.md) | Implement the minimum production code for the current failing test. |
+| [`yagni`](docs/skills/yagni.md) | Remove speculative code during RED and GREEN. |
+| [`refactor`](docs/skills/refactor.md) | Apply one focused behavior-preserving refactor. |
+| [`test-quality`](docs/skills/test-quality.md) | Improve fixtures, naming, signal/noise, and strict serialized assertions. |
+| [`test-doubles`](docs/skills/test-doubles.md) | Choose between dummies, stubs, fakes, spies, and mocks. |
+| [`backend-tests`](docs/skills/backend-tests.md) | Kotlin/Spring test patterns for controllers, use cases, JPA, and HTTP adapters. |
+| [`frontend-tests`](docs/skills/frontend-tests.md) | React/Next.js testing with RTL, child mocks, and MSW. |
+| [`hexagonal-arch`](docs/skills/hexagonal-arch.md) | Evolve ports, domain services, and dependency direction safely. |
+| [`anemic-use-case-check`](docs/skills/anemic-use-case-check.md) | Detect use cases that only proxy calls without business behavior. |
+| [`semantic-search`](docs/skills/semantic-search.md) | Index and search code with Qdrant for conceptual queries. |
+| [`mutation-testing`](docs/skills/mutation-testing.md) | Run incremental mutation testing after the behavior list is complete. |
+| [`notes`](docs/skills/notes.md) | Capture follow-up ideas and review items without interrupting the main flow. |
+| [`commit`](docs/skills/commit.md) | Apply commit format, ticket scope, validation, and commit separation rules. |
+| [`migrate-controller-stack`](docs/skills/migrate-controller-stack.md) | Migrate a controller, its lower layers, and full-stack tests between services. |
 
-### Installation
+## Optional semantic code search
 
-**1. Start Qdrant locally with Docker:**
+Semantic search is optional and is useful for conceptual navigation in large
+projects.
+
+### Start Qdrant
+
 ```bash
 docker run -d --name qdrant \
   -p 6333:6333 -p 6334:6334 \
-  -v $(pwd)/qdrant_storage:/qdrant/storage \
+  -v "$(pwd)/qdrant_storage:/qdrant/storage" \
   qdrant/qdrant
 ```
 
-**2. Install the qdrant-rag MCP server:**
+### Install and configure the MCP server
+
 ```bash
 npm install -g qdrant-rag-mcp
 ```
 
-**3. Register it in your Copilot CLI MCP config** (`~/.copilot/mcp.json` or equivalent):
+Add the server to `~/.copilot/mcp.json`:
+
 ```json
 {
   "mcpServers": {
@@ -108,32 +138,29 @@ npm install -g qdrant-rag-mcp
 }
 ```
 
-**4. Index the sub-projects** (first time only — see `AGENTS.md` for the full collection map):
-```bash
-# Example for one sub-project:
-# Use the qdrant-rag index_codebase tool via Copilot CLI, pointing at the sub-project path.
-# Never index from the repo root — the root .gitignore blocks everything.
-```
+Index a specific sub-project with the `index_codebase` tool, following the
+collection map and exclusions described by the `semantic-search` skill. Do not
+index the workspace root.
 
-### Usage
+## Repository layout
 
-Once installed, Copilot agents will automatically use `reindex_changes` at the start of each session (as instructed in `AGENTS.md`) and will prefer semantic search over `grep` for conceptual queries.
+| Path | Contents |
+|---|---|
+| [`AGENTS.md`](AGENTS.md) | Repository-wide agent, TDD, architecture, and skill rules. |
+| [`AGENTS-public.md`](AGENTS-public.md) | Public TDD guidance and testing principles. |
+| [`docs/skills/`](docs/skills/) | Full reference documentation for reusable skills. |
+| [`.github/skills/`](.github/skills/) | Copilot-discoverable skill definitions. |
+| [`docs/project-map.md`](docs/project-map.md) | Inventory of application projects. |
+| [`.tdd-state.json`](.tdd-state.json) | Shared state contract for active TDD work. |
 
----
+## Existing project directories
 
-## 💻 Basic Usage
+The workspace includes services, BFFs, frontends, infrastructure repositories,
+experiments, and architecture documentation. Some projects have their own
+`AGENTS.md` and local skills. Always follow the deepest applicable guidance
+when working inside one of them.
 
-The core of `aiTDDWorkflow` relies on discipline. When facing a new requirement:
+## Maintainer
 
-1. **Define the expected behavior:** Use your AI assistant (or a script from this repository) by providing a clear prompt about what the system should do.
-2. **Run the Test:** Verify that the test fails (Red).
-3. **Implement with AI:** Ask the AI to solve the failure and provide the implementation (Green).
-4. **Refactor:** Request code optimization and clean-up (Refactor).
-
-*Example AI prompt:*
-
-> "Write a PyTest test case for a function `calculate_discount(price, percentage)` that validates that the final price is not negative."
-
----
-
-*Developed and maintained by [javisan81](https://github.com/javisan81).*
+Developed and maintained by
+[javierlopezfernandez](https://github.com/javier-lopez-fernandez).
