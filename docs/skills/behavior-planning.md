@@ -35,6 +35,7 @@ Before starting the next test cycle:
    - Mark completed behaviors as done (`[x]`).
    - Add newly discovered scenarios or edge cases.
    - Strike through or remove obsolete scenarios from the test lists planned based on the previous review step done (YAGNI).
+   - Read the files changed and the tests created in the code during the session and use that info to understand if it is required more iterations and behavioural tests. Also search for TODOS or other marks in the project of remaining things related to the current changes.
    - Remove notes with /notes skill already covered
    - Review the notes with /notes skill to take them into account to change the list of tests or plan refactors, ask the client which ones to take into account for this new cycle. 
 3. **Select:** Explicitly state which behavior is being tested next.
