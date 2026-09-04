@@ -14,6 +14,8 @@ Before changing files:
 2. Read the deepest applicable `AGENTS.md` and project-local instructions.
 3. Work from that project directory and use its documented commands.
 
+We do TDD as a rule for all the tasks, the only reason to skip the flow is the customer requiring to change it.
+
 ## TDD protocol
 
 For new features, follow the TDD cycle mechanically unless the user explicitly
@@ -23,16 +25,21 @@ Use these skills for the detailed checklists and state management:
 `/behavior-planning`, `/tdd-outside-in`, `/tdd-state`, `/red-phase`,
 `/green-phase`, `/yagni`, `/refactor`, `/hexagonal-arch`, `/commit`, and
 `/mutation-testing`.
+Update qdrant-rag in the project you are changing files.
+Use the semantic-search skill to search for files or info, prefer this approach to anythinge else.
+
+The following are the steps to follow, please pay attention to the Allowed transitions section and TDD violations. 
 
 ### PLAN
 
 Use `/behavior-planning` to create or update the Test List, then show the list
-and stop for explicit user approval before RED.
+and stop for explicit user approval before RED. 
+Review the notes and use them in the `/behavior-planning` to create or update the Test List.
 
 ### RED
 
 Select the next behavior, use `/red-phase` to write and run exactly one failing
-test, show the failure, and stop for explicit approval before production code.
+test, show the failure, and **stop for explicit feedback** before production code.
 
 ### GREEN
 
@@ -43,7 +50,7 @@ tests. Proceed automatically to REFACTOR when green.
 
 Apply one focused refactor using `/refactor`. If the project is backend code,
 run `/hexagonal-arch`; if a test was refactored, use `/test-quality`. Preserve
-behavior, run the applicable validation, and stop for feedback and explicit
+behavior, run the applicable validation, and **stop for feedback** and explicit
 approval before committing.
 
 ### COMMIT
@@ -54,7 +61,7 @@ is complete only after GREEN, REFACTOR, and COMMIT.
 
 ### FINISHED
 
-After all planned behaviors are complete, use `/mutation-testing`. Do not run a
+After all planned behaviors are complete, and all notes are marked as done or are empty, use `/mutation-testing`. Do not run a
 full mutation suite when no reliable incremental mechanism exists; record the
 reason in `.tdd-state.json` and follow the skill's approval flow.
 
@@ -64,13 +71,29 @@ Stop and flag immediately if production code is written without a failing test,
 phases are combined, a test is added before approval, or multiple GREEN cycles
 are committed together.
 
-### Allowed transitions
+### Mandatory user-feedback gates
 
+Every instruction in this workflow that says to stop, request feedback, or wait
+for explicit approval is an absolute blocking gate. The agent must stop all
+further work until the required user response is received. This applies to
+plan approval, approval of each concrete RED test before GREEN, refactor
+feedback and approval before COMMIT, and any approval required by a skill.
+
+Approvals must never be inferred from earlier approvals, bundled with another
+approval, assumed from the user's intent, or bypassed because a change is
+small, obvious, or already validated. If the required approval is missing, do
+not edit production code, add another test, refactor, commit, or advance the
+TDD state.
+
+### Allowed transitions
+Use this transtions for each of the previous states. 
+Move from one to another once the first has finished or their requirements have been fulfilled, then execute the next one.
+*Follow them, they are mandatory*:
 - `PLAN -> RED`: user approves the Test List.
 - `RED -> GREEN`: user approves the failing test.
 - `GREEN -> REFACTOR`: proceed automatically after GREEN.
 - `REFACTOR -> COMMIT`: user approves the refactor.
-- `COMMIT -> PLAN`: proceed automatically after the commit.
+- `COMMIT -> PLAN`: **proceed automatically after the commit, go to plan**.
 - `PLAN -> FINISHED`: all planned behaviors are complete and mutation testing
   has finished or has been explicitly skipped according to `/mutation-testing`.
 

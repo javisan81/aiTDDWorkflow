@@ -35,7 +35,9 @@ type(TICKET-123): short description
 - Do not add `Co-authored-by` trailers to commit messages.
 
 ## Pre-commit checklist
-Before running commit validation, read .tdd-state.js. If PHASE is COMMIT and the previous phase was REFACTOR, and the refactor already recorded green tests, do not run tests again. Run only formatting and type-checking where required.
+Before running commit validation, read .tdd-state.js. If PHASE is COMMIT and the previous phase was REFACTOR, and the refactor already recorded green tests, do not run tests again. 
+In case the client has expecifically say dont run all the test then just run the tests of affected code.
+Run only formatting and type-checking where required.
 
 1. **Format code**
    - Backend: `./gradlew ktlintFormat`
