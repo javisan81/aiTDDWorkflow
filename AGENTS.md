@@ -26,6 +26,7 @@ Use these skills for the detailed checklists and state management:
 `/green-phase`, `/yagni`, `/refactor`, `/hexagonal-arch`, `/commit`, and
 `/mutation-testing`.
 Update qdrant-rag in the project you are changing files.
+Updae grapify, so run /graphify update in the project (subfolder) you are changing files.
 Use the semantic-search skill to search for files or info, prefer this approach to anythinge else.
 
 The following are the steps to follow, please pay attention to the Allowed transitions section and TDD violations. 

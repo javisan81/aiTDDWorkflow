@@ -19,7 +19,7 @@ Use this skill at the start of a new feature or task, and at the beginning of ea
 
 When starting a task:
 1. **Analyze Requirements:** Identify the boundaries, happy path, edge cases, and error conditions. If you have a jira ticket access to it.
-   Identify the files to minimize the context size using a local rag if configured as mcp or you have access to it. 
+   Identify the files to minimize the context size using /semantic-search, read the stack trace of calls which apply. 
 2. **Draft Test List:** Write a bulleted list of high-level behaviors ordered and adapted by the skill /tdd-outside-in .
 3. **Format:** Use descriptive, domain-focused titles (e.g., `* Should reject order when inventory is zero`).
 4. **Check the list of tests:** Check that the list of tests will change something in production, this means reading the tests of the files identified to be changed and compare them with the new tests suggested, if this is not clear enough reduce the list to the steps that will produce a change in production code.
@@ -35,7 +35,7 @@ Before starting the next test cycle:
    - Mark completed behaviors as done (`[x]`).
    - Add newly discovered scenarios or edge cases.
    - Strike through or remove obsolete scenarios from the test lists planned based on the previous review step done (YAGNI).
-   - Read the files changed and the tests created in the code during the session and use that info to understand if it is required more iterations and behavioural tests. Also search for TODOS or other marks in the project of remaining things related to the current changes.
+   - Read the files changed through /semantic-search and the tests created in the code during the session and use that info to understand if it is required more iterations and behavioural tests. Also search for TODOS or other marks in the project of remaining things related to the current changes. Take into account also the stack-trace that applies until now.
    - Remove notes with /notes skill already covered
    - Review the notes with /notes skill to take them into account to change the list of tests or plan refactors, ask the client which ones to take into account for this new cycle. 
 3. **Select:** Explicitly state which behavior is being tested next.
