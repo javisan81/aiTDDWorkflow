@@ -100,6 +100,9 @@ Move from one to another once the first has finished or their requirements have 
 - `PLAN -> FINISHED`: all planned behaviors are complete and mutation testing
   has finished or has been explicitly skipped according to `/mutation-testing`.
 
+After every successful commit, do not end the response. Atomically update .tdd-state.json, verify whether any behavior remains pending, and execute PLAN immediately. 
+FINISHED is valid only when every test-list item is done, no notes exits, covered-by, existing, or explicitly removed with a recorded user decision.
+
 ## Shared TDD state
 
 When TDD is active, `.tdd-state.json` is the shared state contract. Always use
