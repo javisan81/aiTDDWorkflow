@@ -7,7 +7,7 @@ description: Execute one TDD RED cycle.
 
 This skill performs only the RED action selected by `AGENTS.md`, **run it in the main agent**, **all steps are mandatory, dont skip any step**:
 
-0. Based on the behavior tests to implement select the layer based on the skill /tdd-outside-in, try to find the closer project to the customer with the higher layout. Perhaps multiple tests need to be done, based on this, update the list of tests with this info.
+0. *Based on the behavior tests to implement select the layer using the skill `/tdd-outside-in`, try to find the closer project to the customer with the higher layout. Perhaps multiple tests need to be done, based on this, add these new tests as notes (/notes skill)*.
 1. Write exactly one failing test for the current behavior. Use `/backend-tests` or `/frontend-tests` skills to have the guidelines about what tests to write.
 2. Mock if required using the `/test-doubles` skill
 3. Run the smallest relevant existing test command, this means run the tests in the file you updated the red test.

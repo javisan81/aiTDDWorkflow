@@ -51,7 +51,7 @@ tests. Proceed automatically to REFACTOR when green.
 
 ### REFACTOR
 
-Apply one focused refactor using `/refactor`. If the project is backend code,
+Apply refactors in the area we are changing code, include the tests modified, using `/refactor`. If the project is backend code,
 run `/hexagonal-arch`; if a test was refactored, use `/test-quality`. Preserve
 behavior, run the applicable validation, and **stop for feedback** and explicit
 approval before committing.
@@ -64,7 +64,7 @@ is complete only after GREEN, REFACTOR, and COMMIT.
 
 ### FINISHED
 
-After all planned behaviors are complete, and all notes are marked as done or are empty, use `/mutation-testing`. Do not run a
+After all planned behaviors are complete, and all notes are marked as done or if they are empty, use `/mutation-testing`. Do not run a
 full mutation suite when no reliable incremental mechanism exists; record the
 reason in `.tdd-state.json` and follow the skill's approval flow.
 
