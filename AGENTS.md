@@ -15,6 +15,8 @@ Before changing files:
 3. Work from that project directory and use its documented commands.
 
 We do TDD as a rule for all the tasks, the only reason to skip the flow is the customer requiring to change it.
+The way we do TDD is described in the TDD protocol the stages below, the allowed transtions, the mandatory user-feedback gates and TDD violations, we follow TDD in that way. 
+All of this is described in this document so when we talk about TDD we always refer to the rules set-up in this document.
 
 ## TDD protocol
 
