@@ -7,6 +7,7 @@ description: Maintain and validate the shared TDD state across every phase.
 
 Read `.tdd-state.json` before every TDD action and update it after every phase
 transition. Never infer state from conversation history.
+.tdd-state.json lives always in the base folder where the user started the session, /cwd in copilot cli
 
 ## Required fields
 
