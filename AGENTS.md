@@ -161,3 +161,6 @@ that skill's sub-project indexing rules.
 
 Full skill content lives in `docs/skills/` and is exposed through
 `.github/skills/`.
+
+## Sub agents
+If you need to create subagents honour the recommended value in each skill and if there is no recommended use the default agent.

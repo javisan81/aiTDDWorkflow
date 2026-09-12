@@ -15,5 +15,6 @@ This skill performs only the GREEN action selected by `AGENTS.md`, run it in the
 6. If we are working on backend and we have clases that require beans to be injected, and if we use interfaces in our test create a bean with a todo implementation. If the class is placed in domain use configuration files to create beans.
 7. Run `/yagni` checklist on the production code just written before showing it to the user, to be sure your code is the minimum one to make the test to pass. YAGNI can be run in parallel with previous step.
 8. If you are forced to implement a class of a mocked interface in the test create the method of that class with a TODO.
+9. Review that all the code created was created because of a failing test, if the code is there but not because of a failing test. Then remove that code.
 
 Do not add tests, refactor, or implement unrequested behavior. Return only the production files changed, concise test evidence, and any blocker.

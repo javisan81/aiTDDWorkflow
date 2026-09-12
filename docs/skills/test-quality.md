@@ -10,6 +10,7 @@ description: >
 # Test Quality Rules
 
 Consider the next sections as steps to pass, like a checklist, to validate the current quality of the test in place, if any of this step does not pass then try to refactor the code to make it pass.
+Apply this to the whole test file, not just your changes.
 
 ## Signal vs noise — the `ANY_` prefix
 
